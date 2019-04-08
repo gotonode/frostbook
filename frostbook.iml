@@ -101,6 +101,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:5.1.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.197" level="project" />
+    <orderEntry type="library" name="Maven: postgresql:postgresql:unknown" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.fluentlenium:fluentlenium-junit:3.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.fluentlenium:fluentlenium-core:3.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-remote-driver:3.14.0" level="project" />
