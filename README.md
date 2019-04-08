@@ -1,2 +1,2 @@
-# frostbook
-Frostbook - a social media app
+# Frostbook
+*a social media app*
