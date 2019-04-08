@@ -1,3 +1,9 @@
+# Project
+/.idea
+/target
+database.mv.db
+database.trace.db
+
 # Compiled class file
 *.class
 
