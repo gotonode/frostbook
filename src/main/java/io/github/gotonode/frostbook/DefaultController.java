@@ -25,16 +25,6 @@ public class DefaultController {
         return "about";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
-
     @PostMapping("/search")
     public String searchPost(@RequestBody String query) {
         System.out.println("Search query: " + query);
