@@ -20,11 +20,38 @@
 </head>
 
 <div th:fragment="menu">
+
+    <style type="text/css">
+    navbar-brand {
+    color: blue;
+    }
+    div.compressor {
+    max-width: 950px;
+    margin: auto;
+    left: 50%;
+    top: 0;
+}
+
+div#summit {
+background-color: #f8f9fa !important;
+border-bottom: 2px solid gray;
+margin-bottom: 20px;
+}
+
+a.footer-link {
+font-family: monospace;
+}
+
+
+    </style>
+
+
     <div id="summit">
         <div class="compressor">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-center">
-                <a class="navbar-brand" href="/" style="color: blue;"><i class="fas fa-user-plus"></i> Frostbook</a>
+                <a class="navbar-brand" href="/" style="color: blue;"><i class="fas fa-user-plus"></i> Frostbook <span
+                        class="sr-only">(current)</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,11 +60,11 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/register}"><i class="far fa-snowflake"></i> Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -52,12 +79,10 @@
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="POST">
+                        <input class="form-control mr-sm-2" name="query" type="search"
+                               placeholder="Search (usernames only)" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>

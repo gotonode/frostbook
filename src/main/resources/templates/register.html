@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: head">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="compressor">
+
+    <h1>Register to Frostbook</h1>
+    <p>New user? Welcome to Frostbook! We're so glad you've decided to join.</p>
+    <p>Your data is protected by <i class="fas fa-user-shield"></i> <strong>GDPR</strong>. And when we say that, we mean it.</p>
+
+    <form class="border border-light p-5">
+        <div class="form-group">
+            <label for="text">Text Field</label>
+            <input id="text" name="text" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="text3">Name</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-address-card-o"></i>
+                    </div>
+                </div>
+                <input id="text3" name="text3" placeholder="(your given, real life name)" type="text"
+                       class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="text4">Profile handle</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-link"></i>
+                    </div>
+                </div>
+                <input id="text4" name="text4" placeholder="(must be unique, non-offensive and 3-12 characters)"
+                       type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-key"></i>
+                    </div>
+                </div>
+                <input id="password" name="password" placeholder="(must be at least 8 characters)" type="text"
+                       class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="text1">Password (again)</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-key"></i>
+                    </div>
+                </div>
+                <input id="text1" name="text1" placeholder="(for verification so that you got it right)" type="text"
+                       class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <button name="submit" type="submit" class="btn btn-primary">Register</button>
+        </div>
+
+    </form>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+
+</html>
