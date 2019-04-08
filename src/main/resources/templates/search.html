@@ -12,7 +12,45 @@
 <div class="compressor">
 
     <h1>Search results</h1>
-    <p>You searched for: <strong th:text="${query}">query</strong></p>
+    <p><span th:text="${count}"></span> results found for your query: "<strong th:text="${query}">query</strong>"</p>
+
+    <div class="row">
+        <div class="col-sm-3 card-row" th:each="user : ${users}">
+            <div class="card bg-light">
+                <!--<img src="..." class="card-img-top" alt="...">-->
+                <strong class="card-header" th:text="${user.handle}"></strong>
+                <div class="card-body">
+
+                    <p class="card-text" th:text="${user.name}"></p>
+
+                </div>
+                <div class="card-footer">
+                    <a th:href="'/id/' + ${user.path}" th:text="'/' + ${user.path}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--    <table class="table">-->
+    <!--        <thead>-->
+    <!--        <th scope="col">ID</th>-->
+    <!--        <th scope="col">Handle</th>-->
+    <!--        <th scope="col">Name</th>-->
+    <!--        <th scope="col">Path</th>-->
+    <!--        <th scope="col">Joined</th>-->
+    <!--        </thead>-->
+    <!--        <tbody>-->
+
+    <!--        <tr th:each="user : ${users}">-->
+    <!--            <th scope="row"><span th:text="${user.id}">user.id</span></th>-->
+    <!--            <td><span th:text="${user.handle}">user.handle</span></td>-->
+    <!--            <td><span th:text="${user.name}">user.name</span></td>-->
+    <!--            <td><a th:href="'/id/' + ${user.path}"><span th:text="${user.path}">user.path</span></a></td>-->
+    <!--            <td><span th:text="${user.date}">user.date</span></td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--    </table>-->
 
 </div>
 

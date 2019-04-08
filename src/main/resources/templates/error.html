@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: head">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="compressor">
+
+    <h1>That's an error!</h1>
+    <p th:text="${message}">message</p>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

@@ -42,6 +42,10 @@ a.footer-link {
 font-family: monospace;
 }
 
+div.card-row {
+padding-bottom: 30px;
+}
+
 
     </style>
 
@@ -82,7 +86,7 @@ font-family: monospace;
                     </ul>
                     <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="POST">
                         <input class="form-control mr-sm-2" name="query" type="search"
-                               placeholder="Search (usernames only)" aria-label="Search">
+                               placeholder="Search (handle, name or path)" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>

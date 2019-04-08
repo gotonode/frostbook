@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: head">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="compressor">
+
+    <h1 th:text="${user.handle}">user.handle</h1>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>
