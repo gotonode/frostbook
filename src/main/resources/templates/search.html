@@ -15,7 +15,7 @@
     <p><span th:text="${count}"></span> results found for your query: "<strong th:text="${query}">query</strong>"</p>
 
     <div class="row">
-        <div class="col-sm-3 card-row" th:each="profile : ${people}">
+        <div class="col-sm-3 card-row" th:each="profile : ${profiles}">
             <div class="card bg-light">
                 <!--<img src="..." class="card-img-top" alt="...">-->
                 <strong class="card-header" th:text="${profile.handle}"></strong>
