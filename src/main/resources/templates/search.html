@@ -15,17 +15,17 @@
     <p><span th:text="${count}"></span> results found for your query: "<strong th:text="${query}">query</strong>"</p>
 
     <div class="row">
-        <div class="col-sm-3 card-row" th:each="user : ${users}">
+        <div class="col-sm-3 card-row" th:each="profile : ${people}">
             <div class="card bg-light">
                 <!--<img src="..." class="card-img-top" alt="...">-->
-                <strong class="card-header" th:text="${user.handle}"></strong>
+                <strong class="card-header" th:text="${profile.handle}"></strong>
                 <div class="card-body">
 
-                    <p class="card-text" th:text="${user.name}"></p>
+                    <p class="card-text" th:text="${profile.name}"></p>
 
                 </div>
                 <div class="card-footer">
-                    <a th:href="'/id/' + ${user.path}" th:text="'/' + ${user.path}"></a>
+                    <a th:href="'/id/' + ${profile.path}" th:text="'/' + ${profile.path}"></a>
                 </div>
             </div>
         </div>
@@ -42,12 +42,12 @@
     <!--        </thead>-->
     <!--        <tbody>-->
 
-    <!--        <tr th:each="user : ${users}">-->
-    <!--            <th scope="row"><span th:text="${user.id}">user.id</span></th>-->
-    <!--            <td><span th:text="${user.handle}">user.handle</span></td>-->
-    <!--            <td><span th:text="${user.name}">user.name</span></td>-->
-    <!--            <td><a th:href="'/id/' + ${user.path}"><span th:text="${user.path}">user.path</span></a></td>-->
-    <!--            <td><span th:text="${user.date}">user.date</span></td>-->
+    <!--        <tr th:each="profile : ${people}">-->
+    <!--            <th scope="row"><span th:text="${profile.id}">profile.id</span></th>-->
+    <!--            <td><span th:text="${profile.handle}">profile.handle</span></td>-->
+    <!--            <td><span th:text="${profile.name}">profile.name</span></td>-->
+    <!--            <td><a th:href="'/id/' + ${profile.path}"><span th:text="${profile.path}">profile.path</span></a></td>-->
+    <!--            <td><span th:text="${profile.date}">profile.date</span></td>-->
     <!--        </tr>-->
     <!--        </tbody>-->
     <!--    </table>-->

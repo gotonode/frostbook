@@ -20,7 +20,7 @@ public class Comment extends AbstractPersistable<Long> {
 
     //@Column(name = "from_user", nullable = false)
     @OneToOne
-    private User fromUser;
+    private Profile fromProfile;
 
     @Column(name = "comment", nullable = false)
     private String comment;
@@ -32,5 +32,5 @@ public class Comment extends AbstractPersistable<Long> {
     private List<Subcomment> subcomments;
 
     @ManyToMany
-    private List<User> likedBy;
+    private List<Profile> likedBy;
 }

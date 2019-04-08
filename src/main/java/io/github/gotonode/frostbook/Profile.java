@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class User extends AbstractPersistable<Long> {
+public class Profile extends AbstractPersistable<Long> {
 
     @Column(name = "handle", nullable = false, unique = true)
     private String handle;
@@ -24,7 +24,7 @@ public class User extends AbstractPersistable<Long> {
     private String path;
 
     @ManyToMany
-    private List<User> friends;
+    private List<Profile> friends;
 
     @ManyToMany
     private List<Request> requests;
@@ -43,10 +43,10 @@ public class User extends AbstractPersistable<Long> {
     @ManyToMany
     private List<Comment> comments;
 
-    public User() {
+    public Profile() {
     }
 
-    public User(String handle, String password, String name, String path) {
+    public Profile(String handle, String password, String name, String path) {
         this.handle = handle;
         this.password = password;
         this.name = name;
@@ -55,7 +55,7 @@ public class User extends AbstractPersistable<Long> {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Profile{" +
                 "handle='" + handle + '\'' +
                 ", password='" + String.valueOf("REDACTED") + '\'' +
                 ", name='" + name + '\'' +

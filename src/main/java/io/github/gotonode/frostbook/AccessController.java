@@ -14,7 +14,7 @@ import java.util.Map;
 public class AccessController {
 
     @Autowired
-    private UserService userService;
+    private ProfileService profileService;
 
     @GetMapping("/login")
     public String login() {
@@ -42,15 +42,15 @@ public class AccessController {
     public String okay(@PathVariable String path, Model model) {
         System.out.println("Requesting path: " + path);
 
-        User user = userService.findByPath(path);
+        Profile profile = profileService.findByPath(path);
 
-        if (user == null) {
-            model.addAttribute("message", "No user was found who owns that path. Please try the search functionality.");
+        if (profile == null) {
+            model.addAttribute("message", "No profile was found who owns that path. Please try the search functionality.");
             return "error";
         }
 
-        model.addAttribute("user", user);
+        model.addAttribute("profile", profile);
 
-        return "user";
+        return "profile";
     }
 }

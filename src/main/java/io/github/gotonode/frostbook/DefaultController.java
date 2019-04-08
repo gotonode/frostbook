@@ -14,7 +14,7 @@ import java.util.List;
 public class DefaultController {
 
     @Autowired
-    private UserService userService;
+    private ProfileService profileService;
 
     @GetMapping("/")
     public String main(Model model) {
@@ -47,17 +47,17 @@ public class DefaultController {
 
         query = query.trim();
 
-        List<User> users;
+        List<Profile> profiles;
 
         if (query.isEmpty()) {
-            users = userService.findAll();
+            profiles = profileService.findAll();
         } else {
-            users = userService.find(query);
+            profiles = profileService.find(query);
         }
 
         model.addAttribute("query", query.trim());
-        model.addAttribute("users", users);
-        model.addAttribute("count", users.size());
+        model.addAttribute("profiles", profiles);
+        model.addAttribute("count", profiles.size());
 
         return "search";
 
@@ -69,9 +69,9 @@ public class DefaultController {
                           @RequestParam String password,
                           @RequestParam String path) {
 
-        User user = userService.add(handle, password, name, path);
+        Profile profile = profileService.add(handle, password, name, path);
 
-        System.out.println("Created new user: " + user);
+        System.out.println("Created new profile: " + profile);
 
         return "redirect:/";
     }

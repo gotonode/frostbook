@@ -16,9 +16,8 @@ import java.util.Date;
 @Entity
 public class Subcomment extends AbstractPersistable<Long> {
 
-    //@Column(name = "from_user", nullable = false)
     @OneToOne
-    private User fromUser;
+    private Profile fromProfile;
 
     @Column(name = "comment", nullable = false)
     private String comment;

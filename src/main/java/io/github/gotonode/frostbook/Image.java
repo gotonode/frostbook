@@ -36,7 +36,7 @@ public class Image extends AbstractPersistable<Long> {
     private Date date;
 
     @ManyToMany
-    private List<User> likedBy;
+    private List<Profile> likedBy;
 
     @ManyToMany
     private List<Subcomment> subcomments;
