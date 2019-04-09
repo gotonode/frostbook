@@ -30,3 +30,7 @@ div.card-row {
 h1 {
     font-size: 2em;
 }
+
+.carousel-caption {
+	color: black;
+}
