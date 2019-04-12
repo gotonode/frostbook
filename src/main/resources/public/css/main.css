@@ -9,10 +9,12 @@ navbar-brand {
 }
 
 div.compressor {
-    max-width: 950px;
+    max-width: 970px;
     margin: auto;
     left: 50%;
     top: 0;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 div#summit {
