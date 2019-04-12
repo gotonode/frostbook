@@ -13,7 +13,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     Profile findProfileByPath(String path);
 
-    List<Profile> findAllByHandleOrNameOrPathOrderByIdAsc(String handle, String name, String path);
+    List<Profile> findAllByHandleOrNameOrPathContainingOrderByIdAsc(String handle, String name, String path);
 
     List<Profile> findAllByOrderByIdAsc();
 

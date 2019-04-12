@@ -78,7 +78,7 @@ public class ProfileService {
     }
 
     public List<Profile> find(String query) {
-        return profileRepository.findAllByHandleOrNameOrPathOrderByIdAsc(query, query, query);
+        return profileRepository.findAllByHandleOrNameOrPathContainingOrderByIdAsc(query, query, query);
     }
 
     public List<Profile> findAll() {

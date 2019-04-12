@@ -15,8 +15,17 @@ div#summit {
     margin-bottom: 20px;
 }
 
-a.footer-link {
+.footer-list-item {
+    margin-bottom: 0.4em;
     font-family: monospace;
+}
+
+.footer-list-item a:hover {
+    text-decoration: none;
+}
+
+.heart {
+    color: darkred;
 }
 
 div.card-row {
