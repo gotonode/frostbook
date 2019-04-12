@@ -43,9 +43,13 @@ public class DefaultController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String query, Model model) {
+    public String search(@RequestParam(required = false) String query, Model model) {
 
-        query = query.trim();
+        if (query == null) {
+            query = "";
+        } else {
+            query = query.trim();
+        }
 
         List<Profile> profiles;
 
@@ -60,8 +64,5 @@ public class DefaultController {
         model.addAttribute("count", profiles.size());
 
         return "search";
-
     }
-
-
 }

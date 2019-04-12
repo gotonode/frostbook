@@ -27,6 +27,6 @@ public class DebugController {
 
         System.out.println("Created new profile: " + profile);
 
-        return "redirect:/";
+        return "redirect:/search";
     }
 }
