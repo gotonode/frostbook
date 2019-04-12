@@ -13,14 +13,14 @@
 
     <h1>Search results</h1>
     <p>
-        <span th:text="${count}" class="badge badge-info">count</span> result<span th:text="${count != 1} ? 's'"></span> found
+        <span th:text="${count}" class="badge badge-primary">count</span> result<span th:text="${count != 1} ? 's'"></span> found
         <span th:if="${query != ''}"> for your query:
             <span id="query-string" th:text="${query}">query</span>
         </span>
         <span th:if="${query == ''}">without a search query</span>
     </p>
 
-    <div class="card-deck">
+    <div class="card-deck" th:if="${count >= 1}">
         <div class="col-sm-6 card-row" th:each="profile : ${profiles}">
             <div class="card bg-light">
                 <div class="ribbon"><span>ADMIN</span></div>
@@ -36,6 +36,14 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div th:if="${count == 0}">
+        Here are some things you can try to find more profiles:
+        <ul>
+            <li>Use shorter search terms</li>
+            <li>Invite your friends here so the database isn't empty</li>
+            <li>Skip specifying a search term to see everyone; <a th:href="@{/search}">try it out</a></li>
+        </ul>
     </div>
 </div>
 
