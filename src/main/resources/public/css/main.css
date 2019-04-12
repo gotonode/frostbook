@@ -34,3 +34,10 @@ h1 {
 .carousel-caption, .carousel-control-prev, .carousel-control-prev {
 	color: black;
 }
+
+#error-message {
+    font-family: monospace;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 3px dashed orange;
+}
