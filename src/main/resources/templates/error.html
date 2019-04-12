@@ -12,20 +12,25 @@
 <div class="compressor">
 
     <div class="card border-danger">
-        <div class="card-header text-danger">
-            Unfortunately, there was an error.
-        </div>
+        <div class="card-header text-danger">Unfortunately, there was an error.</div>
         <div class="card-body">
             <p class="card-title">The exact error message is displayed below:</p>
 
             <p class="card-text" id="error-message" th:text="${message}"></p>
 
-            <p class="card-text">You can either try again, return to index or log out and try logging back in. Clearing your cookies might also help.</p>
+            <p class="card-text">You can either try again, return to index or log out and try logging back in. Clearing
+                your cookies might also help.</p>
 
-            <a href="#" onclick="location.reload();" class="btn btn-primary">Reload page</a> <a th:href="@{/}" class="btn btn-primary">Return to index</a> <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
+            <a href="#" onclick="location.reload();" class="btn btn-primary">Reload page</a>
+            <a th:href="@{/}" class="btn btn-primary">Return to index</a>
+            <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
 
         </div>
-        <div class="card-footer"><small class="text-secondary">Please don't tell your friends about this. We promise we'll do better next time! :-)</small></div>
+        <div class="card-footer">
+            <small class="text-secondary">Please don't tell your friends about this. We promise we'll do better next
+                time! :-)
+            </small>
+        </div>
     </div>
 
 </div>

@@ -63,16 +63,5 @@ public class DefaultController {
 
     }
 
-    @GetMapping("/addUser")
-    public String addUser(@RequestParam String handle,
-                          @RequestParam String name,
-                          @RequestParam String password,
-                          @RequestParam String path) {
 
-        Profile profile = profileService.add(handle, password, name, path);
-
-        System.out.println("Created new profile: " + profile);
-
-        return "redirect:/";
-    }
 }
