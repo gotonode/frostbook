@@ -32,14 +32,17 @@ public class DefaultController {
     }
 
     @PostMapping("/search")
-    public String searchPost(@RequestBody String query) {
+    public String searchPost(@RequestParam String query) {
+        
         System.out.println("Search query: " + query);
-
-        query = query.replace("query=", "");
 
         query = query.trim();
 
-        return "redirect:/search?query=" + query;
+        if (query.isEmpty()) {
+            return "redirect:/search";
+        } else {
+            return "redirect:/search?query=" + query;
+        }
     }
 
     @GetMapping("/search")
