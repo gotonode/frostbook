@@ -32,7 +32,8 @@ div#summit {
     font-family: monospace;
     font-weight: bold;
     border: 1px solid lightgray;
-    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-left: 0.2em;
 }
 
