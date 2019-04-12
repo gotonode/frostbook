@@ -20,6 +20,14 @@ div#summit {
     font-family: monospace;
 }
 
+#query-string {
+    font-family: monospace;
+    font-weight: bold;
+    border: 1px solid lightgray;
+    padding: 5px;
+    margin-left: 0.2em;
+}
+
 .footer-list-item a:hover {
     text-decoration: none;
 }

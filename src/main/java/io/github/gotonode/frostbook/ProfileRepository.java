@@ -13,7 +13,15 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     Profile findProfileByPath(String path);
 
-    List<Profile> findAllByHandleOrNameOrPathContainingOrderByIdAsc(String handle, String name, String path);
+    /**
+     * This method has a very long name but it works.
+     * @param handle What we are searching for.
+     * @param name What we are searching for.
+     * @param path What we are searching for.
+     * @return A list of Profile-objects for your convenience.
+     */
+    List<Profile> findAllByHandleContainingOrNameContainingOrPathContainingOrderByIdAsc
+    (String handle, String name, String path);
 
     List<Profile> findAllByOrderByIdAsc();
 

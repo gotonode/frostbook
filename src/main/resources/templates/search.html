@@ -12,7 +12,13 @@
 <div class="compressor">
 
     <h1>Search results</h1>
-    <p><span th:text="${count}"></span> results found for your query: "<strong th:text="${query}">query</strong>"</p>
+    <p>
+        <span th:text="${count}" class="badge badge-info">count</span> result<span th:text="${count != 1} ? 's'"></span> found
+        <span th:if="${query != ''}"> for your query:
+            <span id="query-string" th:text="${query}">query</span>
+        </span>
+        <span th:if="${query == ''}">without a search query</span>
+    </p>
 
     <div class="card-deck">
         <div class="col-sm-6 card-row" th:each="profile : ${profiles}">
