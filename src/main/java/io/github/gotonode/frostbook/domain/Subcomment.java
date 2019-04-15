@@ -1,4 +1,4 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

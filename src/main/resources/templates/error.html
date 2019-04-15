@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:replace="fragments/header :: head">
+<head th:replace="fragments/header :: head(title = 'Error')">
     <title>Frostbook</title>
 </head>
 
@@ -9,7 +9,7 @@
 
 <div th:replace="fragments/header :: menu"></div>
 
-<div class="compressor">
+<main>
 
     <div class="card border-danger">
         <div class="card-header text-danger">Unfortunately, there was an error.</div>
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-</div>
+</main>
 
 <div th:replace="fragments/footer :: footer"></div>
 

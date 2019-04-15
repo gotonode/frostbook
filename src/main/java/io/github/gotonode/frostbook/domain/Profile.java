@@ -1,9 +1,10 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.domain;
 
 import lombok.Data;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,23 +35,27 @@ public class Profile extends AbstractPersistable<Long> {
 
     @Column(name = "images", nullable = false)
     @OneToMany
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     //@Column(name = "profile_image", nullable = true)
     @OneToOne
     private Image profileImage;
 
     @ManyToMany
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
-    public Profile() {
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> authorities = new ArrayList<>();
 
     public Profile(String handle, String password, String name, String path) {
         this.handle = handle;
         this.password = password;
         this.name = name;
         this.path = path;
+    }
+
+    public Profile() {
+
     }
 
     @Override

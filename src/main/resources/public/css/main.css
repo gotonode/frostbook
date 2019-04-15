@@ -1,6 +1,6 @@
 body {
     /* So that the page won't "jitter" around when the scrollbar is visible or not. */
-    overflow: scroll;
+    overflow-y: scroll;
     margin: 0;
 }
 
@@ -8,13 +8,24 @@ navbar-brand {
     color: blue;
 }
 
-div.compressor {
+nav, main, footer {
     max-width: 970px;
     margin: auto;
-    left: 50%;
     top: 0;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+main, footer {
+    left: 50;
+}
+
+footer {
+    padding-bottom: 15px;
+}
+
+div#compressor-top {
+    padding: 0px;
 }
 
 div#summit {
@@ -62,4 +73,8 @@ h1 {
     margin-left: 15px;
     padding-left: 15px;
     border-left: 3px dashed orange;
+}
+
+label {
+    margin-left: 53px;
 }

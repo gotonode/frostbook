@@ -1,5 +1,10 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.service;
 
+import io.github.gotonode.frostbook.domain.Profile;
+import io.github.gotonode.frostbook.domain.Request;
+import io.github.gotonode.frostbook.form.RegisterData;
+import io.github.gotonode.frostbook.repository.ProfileRepository;
+import io.github.gotonode.frostbook.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,5 +92,20 @@ public class ProfileService {
 
     public Profile findByPath(String path) {
         return profileRepository.findProfileByPath(path);
+    }
+
+    public Profile create(RegisterData registerData) {
+
+        Profile profile = new Profile();
+
+        profile.setDate(Date.from(Instant.now()));
+        profile.setHandle(registerData.getHandle().trim());
+        profile.setName(registerData.getName().trim());
+        profile.setPassword(registerData.getPassword());
+        profile.setPath(registerData.getPath().trim());
+
+        profile.getAuthorities().add("USER");
+
+        return profileRepository.save(profile);
     }
 }

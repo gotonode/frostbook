@@ -1,65 +1,59 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>Frostbook TEMPLATE</title>
-</head>
+<head><title>TEMPLATE</title></head>
 
 <body>
 
 <div th:fragment="footer" id="footer">
 
-    <div class="compressor">
+    <footer class="page-footer font-small blue pt-4">
 
-        <footer class="page-footer font-small blue pt-4">
+        <div class="container-fluid text-center text-md-left">
 
-            <div class="container-fluid text-center text-md-left">
+            <div class="row">
 
-                <div class="row">
+                <div class="col-md-5 mt-md-0 mt-3">
 
-                    <div class="col-md-5 mt-md-0 mt-3">
+                    <p class="text-uppercase">Frostbook</p>
+                    <p><strong>Frostbook</strong> is a social media platform made with a warm <i
+                            class="fas fa-heart heart"></i> in cold Finland. It's a student project that's currently
+                        under development.</p>
+                    <small class="text-secondary">Please don't sue.</small>
 
-                        <p class="text-uppercase">Frostbook</p>
-                        <p><strong>Frostbook</strong> is a social media platform made with a warm <i
-                                class="fas fa-heart heart"></i> in cold Finland. It's a student project.</p>
-                        <small class="text-secondary">Please don't sue.</small>
+                </div>
 
-                    </div>
+                <hr class="clearfix w-100 d-md-none pb-3">
 
-                    <hr class="clearfix w-100 d-md-none pb-3">
+                <div class="col-md-3 mb-md-0 mb-3">
 
-                    <div class="col-md-3 mb-md-0 mb-3">
+                    <p class="text-uppercase">Internal</p>
 
-                        <p class="text-uppercase">Internal</p>
+                    <ul class="list-unstyled">
+                        <li class="footer-list-item">
+                            <a th:href="@{/about}" class="footer-link"><i class="fas fa-info fa-fw"></i> About</a>
+                        </li>
+                        <li class="footer-list-item">
+                            <a th:href="@{/help}" class="footer-link"><i class="fas fa-question fa-fw"></i> Help me!</a>
+                        </li>
+                    </ul>
 
-                        <ul class="list-unstyled">
-                            <li class="footer-list-item">
-                                <a th:href="@{/about}" class="footer-link"><i class="fas fa-info fa-fw"></i> About</a>
-                            </li>
-                            <li class="footer-list-item">
-                                <a th:href="@{/help}" class="footer-link"><i class="fas fa-question fa-fw"></i> Help me!</a>
-                            </li>
-                        </ul>
+                </div>
 
-                    </div>
+                <div class="col-md-4 mb-md-0 mb-3">
 
-                    <div class="col-md-4 mb-md-0 mb-3">
+                    <p class="text-uppercase">External</p>
 
-                        <p class="text-uppercase">External</p>
-
-                        <ul class="list-unstyled">
-                            <li class="footer-list-item">
-                                <a href="https://github.com/gotonode/frostbook" target="_blank" class="footer-link"><i
-                                        class="fab fa-github fa-fw"></i> Frostbook on GitHub</a>
-                            </li>
-                            <li class="footer-list-item">
-                                <a href="https://github.com/gotonode" target="_blank" class="footer-link"><i
-                                        class="fas fa-laptop-code fa-fw"></i> My other projects</a>
-                            </li>
-                        </ul>
-
-                    </div>
-
+                    <ul class="list-unstyled">
+                        <li class="footer-list-item">
+                            <a href="https://github.com/gotonode/frostbook" target="_blank" class="footer-link"><i
+                                    class="fab fa-github fa-fw"></i> Frostbook on GitHub</a>
+                        </li>
+                        <li class="footer-list-item">
+                            <a href="https://github.com/gotonode" target="_blank" class="footer-link"><i
+                                    class="fas fa-laptop-code fa-fw"></i> My other projects</a>
+                        </li>
+                    </ul>
 
                 </div>
 
@@ -67,13 +61,15 @@
             </div>
 
 
-            <!--            <div class="footer-copyright text-center py-3">© 2019 Copyright:-->
-            <!--                <a href=""> gotonode</a>-->
-            <!--            </div>-->
+        </div>
 
-        </footer>
+        <div th:replace="fragments/footer :: scripts"></div>
 
-    </div>
+    </footer>
+
+</div>
+
+<div th:fragment="scripts">
 
     <!-- BEGINSECTION: jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -87,7 +83,7 @@
             crossorigin="anonymous"></script>
     <!-- ENDSECTION -->
 
-    <!-- BEGINSECTION: Bootstrap JS -->
+    <!-- BEGINSECTION: Bootstrap (JS) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>

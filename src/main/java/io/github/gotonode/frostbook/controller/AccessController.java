@@ -1,14 +1,14 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.controller;
 
+import io.github.gotonode.frostbook.domain.Profile;
+import io.github.gotonode.frostbook.service.ProfileService;
+import io.github.gotonode.frostbook.form.RegisterData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import javax.validation.Valid;
 
 @Controller
 public class AccessController {
@@ -33,9 +33,12 @@ public class AccessController {
     }
 
     @PostMapping("/register")
-    public String registerPost(@RequestBody Map<String, String> body) {
-        System.out.println(body);
-        return "redirect:/";
+    public String registerPost(@Valid @ModelAttribute RegisterData registerData) {
+        System.out.println(registerData);
+
+        Profile profile = profileService.create(registerData);
+
+        return "redirect:/id/" + profile.getPath();
     }
 
     @GetMapping("/id/{path}")

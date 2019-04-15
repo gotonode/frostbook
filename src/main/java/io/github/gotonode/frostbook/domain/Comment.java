@@ -1,4 +1,4 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class Comment extends AbstractPersistable<Long> {
     private Date date;
 
     @ManyToMany
-    private List<Subcomment> subcomments;
+    private List<Subcomment> subcomments = new ArrayList<>();
 
     @ManyToMany
-    private List<Profile> likedBy;
+    private List<Profile> likedBy = new ArrayList<>();
 }

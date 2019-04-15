@@ -1,5 +1,7 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.repository;
 
+import io.github.gotonode.frostbook.domain.Profile;
+import io.github.gotonode.frostbook.domain.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {

@@ -1,5 +1,6 @@
-package io.github.gotonode.frostbook;
+package io.github.gotonode.frostbook.repository;
 
+import io.github.gotonode.frostbook.domain.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

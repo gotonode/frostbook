@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:replace="fragments/header :: head">
+<head th:replace="fragments/header :: head(title = 'About')">
     <title>Frostbook</title>
 </head>
 
@@ -9,21 +9,17 @@
 
 <div th:replace="fragments/header :: menu"></div>
 
-<div class="compressor">
+<main>
 
     <h1>About</h1>
-    <p><strong>Frostbook</strong> (hereafter refererred to as the "app" or "service") is a social media platform, made as a student project. Read this document to learn more about the technical details of this project.</p>
-	
-	<h2>Database</h2>
-	<p>During development, H2 database engine is used with a flatfile database in cleartext form. Once the app is pushed to Heroku, Heroku's own PostgreSQL is used for data persistence accross server restarts.</p>
-	
-	<p>
-	
-	</p>
-	
-	
+    <p><strong>Frostbook</strong> (hereafter referred to as the "app" or "service") is a social media platform, made
+        as a student project. Read this document to learn more about the technical details of this project.</p>
 
-</div>
+    <h2>Database</h2>
+    <p>During development, H2 database engine is used with a flatfile database in cleartext form. Once the app is pushed
+        to Heroku, Heroku's own PostgreSQL is used for data persistence across server restarts.</p>
+
+</main>
 
 <div th:replace="fragments/footer :: footer"></div>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:replace="fragments/header :: head">
+<head th:replace="fragments/header :: head(title = 'Register')">
     <title>Frostbook</title>
 </head>
 
@@ -9,74 +9,115 @@
 
 <div th:replace="fragments/header :: menu"></div>
 
-<div class="compressor">
+<main>
 
     <h1>Register to Frostbook</h1>
     <p>New profile? Welcome to Frostbook! We're so glad you've decided to join.</p>
-    <p>Your data is protected by <i class="fas fa-profile-shield"></i> <strong>GDPR</strong>. And when we say that, we mean it.</p>
 
-    <form class="border border-light p-5">
+    <form target="@{/register}" method="POST" class="border border-primary border m-3 p-5 rounded">
         <div class="form-group">
-            <label for="text">Text Field</label>
-            <input id="text" name="text" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="text3">Name</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fa fa-address-card-o"></i>
-                    </div>
-                </div>
-                <input id="text3" name="text3" placeholder="(your given, real life name)" type="text"
-                       class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="text4">Profile handle</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fa fa-link"></i>
-                    </div>
-                </div>
-                <input id="text4" name="text4" placeholder="(must be unique, non-offensive and 3-12 characters)"
-                       type="text" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fa fa-key"></i>
-                    </div>
-                </div>
-                <input id="password" name="password" placeholder="(must be at least 8 characters)" type="text"
-                       class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="text1">Password (again)</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fa fa-key"></i>
-                    </div>
-                </div>
-                <input id="text1" name="text1" placeholder="(for verification so that you got it right)" type="text"
-                       class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <button name="submit" type="submit" class="btn btn-primary">Register</button>
-        </div>
+            <div class="row">
 
+                <div class="col-12 col-md-6">
+                <label for="handle">Handle</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-at"></i>
+                        </div>
+                    </div>
+                    <input id="handle" name="handle" placeholder="(3-12 alphanumeric characters, no spaces)" type="text"
+                           aria-describedby="handleHelpBlock" required="required" class="form-control">
+                </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                <label for="path">Path</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-folder"></i>
+                        </div>
+                    </div>
+                    <input id="path" name="path" placeholder="(3-12 alphanumeric characters, no spaces)" type="text"
+                           aria-describedby="pathHelpBlock" class="form-control">
+                </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <i class="fa fa-address-card"></i>
+                    </div>
+                </div>
+                <input id="name" name="name" placeholder="(3-64 characters, may contain spaces)" type="text"
+                       aria-describedby="nameHelpBlock" class="form-control">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-key"></i>
+                            </div>
+                        </div>
+                        <input id="password" name="password" placeholder="(at least 8 characters)" type="text"
+                               aria-describedby="passwordHelpBlock" class="form-control">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="password">Password (repeat)</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-key"></i>
+                            </div>
+                        </div>
+                        <input id="passwordVerification" name="passwordVerification" placeholder="(at least 8 characters)" type="text"
+                               aria-describedby="passwordHelpBlock" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            <div>
+                <div class="custom-controls-stacked">
+                    <div class="custom-control custom-checkbox">
+                        <input name="checkbox" id="checkbox_0" type="checkbox" checked="checked"
+                               class="custom-control-input" value="rabbit">
+                        <label for="checkbox_0" class="custom-control-label">I agree to the Terms of Use</label>
+                    </div>
+                </div>
+                <div class="custom-controls-stacked">
+                    <div class="custom-control custom-checkbox">
+                        <input name="checkbox" id="checkbox_1" type="checkbox" class="custom-control-input" value="">
+                        <label for="checkbox_1" class="custom-control-label">I agree to the Privacy Policy</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="form-group">
+            <p>Once you submit this form, you'll be taken to your brand new profile! Isn't that exciting?</p>
+        </div>
     </form>
 
     <div th:replace="fragments/footer :: footer"></div>
 
-</div>
+</main>
 
 </body>
 
