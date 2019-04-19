@@ -21,7 +21,7 @@
         <span th:if="${query == ''}">without a search query</span>
     </p>
 
-    <div class="card-deck" th:if="${count >= 1}">
+    <div th:if="${count >= 1}" class="card-deck">
         <div class="col-sm-6 card-row" th:each="profile : ${profiles}">
             <div class="card bg-light">
                 <div class="ribbon"><span>ADMIN</span></div>
@@ -42,13 +42,13 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
         </div>
     </div>
     <div th:if="${count == 0}">
-        Here are some things you can try to find more profiles:
+        <p>Here are some things you can try to find more profiles:</p>
+
         <ul>
             <li>Use shorter search terms</li>
             <li>Invite your friends here so the database isn't empty</li>

@@ -64,19 +64,11 @@ h1 {
     font-size: 2em;
 }
 
-.carousel-caption, a.carousel-control-prev, a.carousel-control-next {
-	color: black;
-}
-
 #error-message {
     font-family: monospace;
     margin-left: 15px;
     padding-left: 15px;
     border-left: 3px dashed orange;
-}
-
-label {
-    margin-left: 53px;
 }
 
 a.autologin {

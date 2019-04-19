@@ -1,6 +1,7 @@
 package io.github.gotonode.frostbook.controller;
 
 import io.github.gotonode.frostbook.domain.Profile;
+import io.github.gotonode.frostbook.service.DebugService;
 import io.github.gotonode.frostbook.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Controller
@@ -20,17 +22,13 @@ public class DebugController {
     @Autowired
     private ProfileService profileService;
 
+    @Autowired
+    private DebugService debugService;
+
     @GetMapping("/debug/createProfile")
     public String createProfile() {
 
-        String handle = UUID.randomUUID().toString().substring(0, 8);
-        String password = UUID.randomUUID().toString().substring(0, 8);
-        String path = UUID.randomUUID().toString().substring(0, 8).toLowerCase();
-        String name = UUID.randomUUID().toString().substring(0, 8)
-                + ' '
-                + UUID.randomUUID().toString().substring(0, 8);
-
-        Profile profile = profileService.add(handle, password, name, path);
+        Profile profile = debugService.createProfile();
 
         System.out.println("Created new profile: " + profile);
 
@@ -50,6 +48,13 @@ public class DebugController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return "redirect:/id/" + profile.getPath();
+        // return "redirect:/id/" + profile.getPath();
+        return "redirect:/search";
+    }
+
+    @GetMapping("/debug/reset")
+    public String reset() {
+        debugService.reset();
+        return "redirect:/";
     }
 }

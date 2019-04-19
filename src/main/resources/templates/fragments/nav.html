@@ -24,29 +24,33 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/register}">
-                            <i class="fas fa-user-plus"></i> Register</a>
+                            <i class="fas fa-fw fa-user-plus"></i> Register</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/login}">
-                            <i class="fas fa-sign-in-alt"></i> Login</a>
+                            <i class="fas fa-fw fa-sign-in-alt"></i> Login</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/friends}">
-                            <i class="fas fa-user-friends"></i> Friends </a>
+                            <i class="fas fa-fw fa-user-friends"></i> Friends </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/requests}">
-                            <i class="fas fa-user-plus"></i> Requests </a>
+                            <i class="fas fa-fw fa-user-plus"></i> Requests </a>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDebug" role="button"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bug"></i> Debug
+                            <i class="fas fa-fw fa-bug"></i> Debug
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownDebug">
-                            <a class="dropdown-item" href="/debug/createProfile">Create random profile</a>
+                            <a class="dropdown-item" href="/debug/createProfile">
+                                <i class="fas fa-fw fa-plus"></i> Create random profile (password is "debug")</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="/debug/reset">
+                                <i class="fas fa-fw fa-power-off"></i> Reset (delete all data)</a>
                         </div>
                     </li>
                 </ul>
@@ -55,7 +59,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <i class="far fa-address-card"></i> <span
+                            <i class="far fa-fw fa-address-card"></i> <span
                                 th:text="${#authentication.getPrincipal().getUsername()}">HANDLE</span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
@@ -67,7 +71,7 @@
                 <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="POST">
                     <input class="form-control mr-sm-2" name="query" type="search"
                            placeholder="(handle, name or path)" aria-label="Search">
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-fw fa-search"></i>
                         Search
                     </button>
                 </form>

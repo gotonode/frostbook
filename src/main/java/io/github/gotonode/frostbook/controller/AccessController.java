@@ -94,7 +94,11 @@ public class AccessController {
     @PostMapping("/requests/add/{handle}")
     public String addRequest(Model model, @PathVariable String handle, Authentication authentication) {
 
-        List<Profile> friends = profileService.getFriends(authentication);
+        // TODO: Refactor the following!
+        if (authentication.getName().equals(handle.trim())) {
+            model.addAttribute("message", "As sad as it is, you cannot add yourself as your own friend.");
+            return "error";
+        }
 
         Profile targetProfile = profileService.findByHandle(handle);
 
@@ -109,6 +113,8 @@ public class AccessController {
             }
         }
 
+        List<Profile> friends = profileService.getFriends(authentication);
+
         // TODO: Optimize and refactor the following!
         for (Profile friend : friends) {
             if (friend.getHandle().equals(handle.trim())) {
@@ -116,12 +122,6 @@ public class AccessController {
                         "Cannot send a friend request to an existing friend! What would be the point?");
                 return "error";
             }
-        }
-
-        // TODO: Refactor the following!
-        if (authentication.getName().equals(handle.trim())) {
-            model.addAttribute("message", "As sad as it is, you cannot add yourself as your own friend.");
-            return "error";
         }
 
         requestService.create(handle);
