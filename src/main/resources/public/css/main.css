@@ -4,7 +4,7 @@ body {
     margin: 0;
 }
 
-navbar-brand {
+#logo {
     color: blue;
 }
 
@@ -17,7 +17,7 @@ nav, main, footer {
 }
 
 main, footer {
-    left: 50;
+    left: 50%;
 }
 
 footer {
@@ -25,7 +25,7 @@ footer {
 }
 
 div#compressor-top {
-    padding: 0px;
+    padding: 0;
 }
 
 div#summit {
@@ -74,4 +74,8 @@ h1 {
 a.autologin {
     font-family: monospace;
     font-size: 0.8em;
+}
+
+.background-admin {
+    background-color: red !important;
 }
