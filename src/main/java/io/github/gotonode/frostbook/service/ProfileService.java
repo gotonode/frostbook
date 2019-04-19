@@ -34,15 +34,14 @@ public class ProfileService {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    public Profile add(String handle, String plaintextPassword, String name, String path) {
+    public Profile add(String handle, String plaintextPassword, String name, String path, List<String> authorities) {
 
         String password = passwordEncoder.encode(plaintextPassword);
 
         Profile profile = new Profile(handle, password, name, path);
         profile.setDate(Date.from(Instant.now()));
 
-        profile.getAuthorities().add("USER");
-        profile.getAuthorities().add("DEBUG");
+        profile.setAuthorities(authorities);
 
         return profileRepository.save(profile);
     }

@@ -32,10 +32,14 @@ public class RegisterData {
     public String toString() {
         return "RegisterData{" +
                 "handle='" + handle + '\'' +
-                ", password='" + password + '\'' +
-                ", passwordVerification='" + passwordVerification + '\'' +
+                ", password='" + String.valueOf("[PROTECTED]") + '\'' +
+                ", passwordVerification='" + String.valueOf("[PROTECTED]") + '\'' +
                 ", path='" + path + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public boolean passwordsMatch() {
+        return password.equals(passwordVerification);
     }
 }

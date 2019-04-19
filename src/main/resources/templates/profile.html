@@ -14,7 +14,7 @@
     <h1 th:text="${profile.handle}">profile.handle</h1>
 
     <form method="POST" th:action="@{/requests/add/} + ${profile.handle}">
-<input type="submit" />
+        <input type="submit"/>
     </form>
 
 </main>

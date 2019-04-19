@@ -12,8 +12,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 @Controller
@@ -26,9 +29,9 @@ public class DebugController {
     private DebugService debugService;
 
     @GetMapping("/debug/createProfile")
-    public String createProfile() {
+    public String createProfile(@RequestParam(required = false) Boolean admin) {
 
-        Profile profile = debugService.createProfile();
+        Profile profile = debugService.createProfile(admin);
 
         System.out.println("Created new profile: " + profile);
 

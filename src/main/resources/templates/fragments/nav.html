@@ -11,7 +11,7 @@
 <div th:fragment="menu">
     <div id="summit">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-center">
+        <nav class="navbar navbar-expand-md navbar-light bg-light navbar-center">
             <a class="navbar-brand" href="/" style="color: blue;"><i class="fas fa-thumbs-down"></i> Frostbook <span
                     class="sr-only">(current)</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -47,7 +47,11 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownDebug">
                             <a class="dropdown-item" href="/debug/createProfile">
-                                <i class="fas fa-fw fa-plus"></i> Create random profile (password is "debug")</a>
+                                <i class="fas fa-fw fa-plus"></i> Create random profile (password is "debug")
+                            </a>
+                            <a class="dropdown-item" href="/debug/createProfile?admin=true">
+                                <i class="fas fa-fw fa-plus"></i> Create random admin profile (password is "debug")
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="/debug/reset">
                                 <i class="fas fa-fw fa-power-off"></i> Reset (delete all data)</a>

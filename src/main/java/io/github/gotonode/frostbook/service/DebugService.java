@@ -7,6 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -42,7 +44,15 @@ public class DebugService {
         profileRepository.deleteAll();
     }
 
-    public Profile createProfile() {
+    public Profile createProfile(Boolean admin) {
+
+        List<String> authorities = new ArrayList<>();
+
+        authorities.add("DEBUG");
+
+        if (admin != null && admin) {
+            authorities.add("ADMIN");
+        }
 
         String handle = UUID.randomUUID().toString().substring(0, 8);
         String password = "debug";
@@ -51,6 +61,6 @@ public class DebugService {
                 + ' '
                 + UUID.randomUUID().toString().substring(0, 8);
 
-        return profileService.add(handle, password, name, path);
+        return profileService.add(handle, password, name, path, authorities);
     }
 }
