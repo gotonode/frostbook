@@ -4,6 +4,7 @@ import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -48,5 +49,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println("User login details: " + user);
 
         return user;
+    }
+
+    public Profile getProfile() {
+        String handle = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return profileRepository.findProfileByHandle(handle);
     }
 }

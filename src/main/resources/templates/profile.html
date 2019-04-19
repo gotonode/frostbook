@@ -7,11 +7,15 @@
 
 <body>
 
-<div th:replace="fragments/header :: menu"></div>
+<div th:replace="fragments/nav :: menu"></div>
 
 <main>
 
     <h1 th:text="${profile.handle}">profile.handle</h1>
+
+    <form method="POST" th:action="@{/requests/add/} + ${profile.handle}">
+<input type="submit" />
+    </form>
 
 </main>
 

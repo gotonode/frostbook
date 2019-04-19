@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 @Data
 public class RegisterData {
 
-    @NotEmpty
+    @NotEmpty(message = "ss")
     @Size(min = 3, max = 10)
     private String handle;
 

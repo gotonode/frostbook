@@ -2,6 +2,7 @@ package io.github.gotonode.frostbook.domain;
 
 import lombok.Data;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -58,15 +59,39 @@ public class Profile extends AbstractPersistable<Long> {
 
     }
 
+    /**
+     * Displays information about the object.
+     * <p>
+     * Note that it's somewhat okay to print the password as it is already hashed.
+     *
+     * @return A String with all the data.
+     */
     @Override
     public String toString() {
         return "Profile{" +
                 "handle='" + handle + '\'' +
-                ", password='" + String.valueOf("REDACTED") + '\'' +
+                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", path='" + path + '\'' +
+                ", friends=" + friends +
+                ", requests=" + requests +
                 ", date=" + date +
+                ", images=" + images +
                 ", profileImage=" + profileImage +
+                ", comments=" + comments +
+                ", authorities=" + authorities +
                 '}';
+    }
+
+    public List<SimpleGrantedAuthority> getSimpleGrantedAuthorities() {
+
+        // TODO: Use Java's stream here.
+        List<SimpleGrantedAuthority> output = new ArrayList<>();
+
+        for (String authority : this.getAuthorities()) {
+            output.add(new SimpleGrantedAuthority(authority));
+        }
+
+        return output;
     }
 }

@@ -1,10 +1,13 @@
 package io.github.gotonode.frostbook.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,8 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
+@Order(0)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Qualifier("customUserDetailsService")
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -36,13 +42,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/css", "/css/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/img", "/img/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/js", "/js/**").permitAll()
+                .antMatchers("/debug", "/debug/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/search").permitAll()
                 .antMatchers(HttpMethod.POST, "/search").permitAll()
+                .antMatchers(HttpMethod.GET, "/id/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/about").permitAll()
                 .antMatchers(HttpMethod.GET, "/help").permitAll()
                 .anyRequest().authenticated().and()
-                .formLogin().loginPage("/login").permitAll().and()
-                .logout().logoutUrl("/logout").permitAll();
+                .formLogin().loginProcessingUrl("/login").loginPage("/login").usernameParameter("handle").passwordParameter("password").permitAll().and() //loginProcessingUrl("/login").defaultSuccessUrl("/id").failureUrl("/login?error").permitAll().and()
+                .logout().logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired
@@ -52,9 +64,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 }

@@ -78,3 +78,8 @@ h1 {
 label {
     margin-left: 53px;
 }
+
+a.autologin {
+    font-family: monospace;
+    font-size: 0.8em;
+}

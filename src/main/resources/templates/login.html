@@ -7,15 +7,21 @@
 
 <body>
 
-<div th:replace="fragments/header :: menu"></div>
+<div th:replace="fragments/nav :: menu"></div>
 
 <main>
 
     <h1>Login to Frostbook</h1>
-    <p>Welcome back!</p>
+    <div class="row no-padding">
+        <div class="col-md-6 col-12 no-padding">
+            <p>Welcome back!</p>
+        </div>
+        <div class="col-md-6 col-12 text-md-right no-padding">
+            <p>Need an account? <a th:href="@{/register}">Register here</a>.</p>
+        </div>
+    </div>
 
-
-    <form class="border border-primary border m-3 p-5 rounded">
+    <form th:action="@{/login}" method="POST" class="border border-primary p-5 rounded">
 
         <div class="form-group">
             <div class="row">
@@ -27,7 +33,7 @@
                                 <i class="fa fa-address-card"></i>
                             </div>
                         </div>
-                        <input id="text" name="text" placeholder="" type="text" class="form-control">
+                        <input id="handle" name="handle" placeholder="" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col-12 col-md-6">

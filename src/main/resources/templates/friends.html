@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: head(title = 'Friends')">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/nav :: menu"></div>
+
+<main>
+
+    <h1>Friends</h1>
+
+    <p>Gander in awe at all of the friends you have!</p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Handle</td>
+            <td>Path</td>
+            <td>Name</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="friend : ${friends}">
+            <td>
+                <span th:text="${friend.handle}"></span></a>
+            </td>
+            <td>
+                <a th:href="@{/id/} + ${friend.path}"><span th:text="'/' + ${friend.path}"></span></a>
+            </td>
+            <td th:text="${friend.name}">
+                friend.name
+            </td>
+            <td>
+                <form method="POST" th:action="@{/friends/} + ${friend.handle} + '/unfriend'">
+                    <button type="submit" class="btn btn-outline-danger w-100"><i class="far fa-trash-alt"></i> Unfriend
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>
