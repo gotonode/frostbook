@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -78,14 +79,32 @@ public class DebugController {
     }
 
     @GetMapping("/debug/enable")
-    public String enable(HttpSession httpSession) {
+    public String enable(HttpSession httpSession, HttpServletRequest httpServletRequest) {
+
+        System.out.println("Enabling Debug-mode for session: " + httpSession.getId());
+
         httpSession.setAttribute("debug", true);
-        return "redirect:/";
+
+        String referer = httpServletRequest.getHeader("Referer");
+        if (referer == null || referer.trim().isEmpty()) {
+            return "redirect:/";
+        }
+
+        return "redirect:" + referer;
     }
 
     @GetMapping("/debug/disable")
-    public String disable(HttpSession httpSession) {
+    public String disable(HttpSession httpSession, HttpServletRequest httpServletRequest) {
+
+        System.out.println("Disabling Debug-mode for session: " + httpSession.getId());
+
         httpSession.removeAttribute("debug");
-        return "redirect:/";
+
+        String referer = httpServletRequest.getHeader("Referer");
+        if (referer == null || referer.trim().isEmpty()) {
+            return "redirect:/";
+        }
+
+        return "redirect:" + referer;
     }
 }

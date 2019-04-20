@@ -63,19 +63,22 @@ public class RequestService {
         fromProfile.getFriends().add(currentProfile);
 
         currentProfile.getRequests().remove(request);
-        //fromProfile.getRequests().remove(request);
+
+        // We delete this if it's found. This is the case where two users have
+        // each sent a friend request to each other.
+        Request secondRequest = requestRepository.findByFromProfile(currentProfile);
+        if (secondRequest != null) {
+            fromProfile.getRequests().remove(secondRequest);
+            requestRepository.delete(secondRequest);
+        }
 
         profileRepository.save(currentProfile);
         profileRepository.save(fromProfile);
 
         requestRepository.delete(request);
 
-        // We delete this if it's found. This is the case where two users have
-        // each sent a friend request to each other.
-        Request secondRequest = requestRepository.findByFromProfile(currentProfile);
-        if (secondRequest != null) {
-            requestRepository.delete(secondRequest);
-        }
+
+
     }
 
     public void remove(String handle) {
