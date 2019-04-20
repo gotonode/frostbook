@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.springframework.org/security/tags">
 
-<head th:replace="fragments/header :: head(title = 'Friends')">
+<head th:replace="fragments/header :: head(title = '')">
     <title>Frostbook</title>
 </head>
 
@@ -12,13 +12,15 @@
 
 <main>
 
+    <div th:if="${session.debug}" class="alert alert-debug alert-fixed" role="alert">
+        <strong>Debug features!</strong> You can, for an example, instantly create random profiles, log in to any
+        account from a link in the search results, and reset the database. Have fun!
+        <hr/>
+        <p class="mb-0">To disable these features, check the Debug-menu or clear your cookies.</p>
+    </div>
+
     <div class="bd-example">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="/img/carousel01.png" class="d-block w-100" alt="...">
@@ -28,19 +30,18 @@
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </div>
 
 
 </main>
+
+<script>
+    function closeModal() {
+        document.getElementById("alert").classList.remove("d-none");
+        window.localStorage.setItem("debugModalHidden", "true");
+    }
+</script>
 
 <div th:replace="fragments/footer :: footer"></div>
 

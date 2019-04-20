@@ -9,11 +9,14 @@ body {
 }
 
 nav, main, footer {
-    max-width: 970px;
     margin: auto;
     top: 0;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+nav, main, footer, .alert-fixed {
+    max-width: 1000px;
 }
 
 main, footer {
@@ -29,7 +32,8 @@ div#compressor-top {
 }
 
 div#summit {
-    background-color: #f8f9fa !important;
+    background: linear-gradient(150deg, white 0%, ghostwhite 50%, aliceblue 75%) !important;
+    background: -moz-linear-gradient(150deg, white 0%, ghostwhite 50%, aliceblue 75%) !important;
     border-bottom: 2px solid gray;
     margin-bottom: 20px;
 }
@@ -41,6 +45,7 @@ div#summit {
 
 #query-string {
     font-family: monospace;
+    line-height: 1em;
     font-weight: bold;
     border: 1px solid lightgray;
     padding-left: 10px;
@@ -66,6 +71,7 @@ h1 {
 
 #error-message {
     font-family: monospace;
+    line-height: 1em;
     margin-left: 15px;
     padding-left: 15px;
     border-left: 3px dashed orange;
@@ -74,8 +80,43 @@ h1 {
 a.autologin {
     font-family: monospace;
     font-size: 0.8em;
+    line-height: 1em;
 }
 
 .background-admin {
     background-color: red !important;
+}
+
+.alert-fixed {
+    position: fixed;
+    opacity: 0.9;
+    z-index: 1;
+}
+
+#welcome-image {
+    background-image: url("/img/carousel01.png");
+    height: 500px;
+}
+
+.carousel-caption {
+    color: black;
+}
+
+.nav-link {
+    color: #555 !important;
+
+}
+
+.alert-debug {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.text-debug {
+    color: #17a2b8 !important;
+}
+
+.form-error {
+    color: darkred;
 }

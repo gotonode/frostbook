@@ -4,20 +4,17 @@ import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.service.DebugService;
 import io.github.gotonode.frostbook.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.UUID;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class DebugController {
@@ -29,7 +26,13 @@ public class DebugController {
     private DebugService debugService;
 
     @GetMapping("/debug/createProfile")
-    public String createProfile(@RequestParam(required = false) Boolean admin) {
+    public String createProfile(HttpSession httpSession, @RequestParam(required = false) Boolean admin, Model model) {
+
+        if (httpSession.getAttribute("debug") == null) {
+            model.addAttribute("message",
+                    "You cannot create random profiles as the debug-features are not enabled.");
+            return "error";
+        }
 
         Profile profile = debugService.createProfile(admin);
 
@@ -39,7 +42,13 @@ public class DebugController {
     }
 
     @GetMapping("/debug/login/{handle}")
-    public String createProfile(@PathVariable String handle) {
+    public String createProfile(HttpSession httpSession, @PathVariable String handle, Model model) {
+
+        if (httpSession.getAttribute("debug") == null) {
+            model.addAttribute("message",
+                    "You cannot automatically log in to a profile as the debug-features are not enabled.");
+            return "error";
+        }
 
         Profile profile = profileService.findByHandle(handle);
 
@@ -56,8 +65,27 @@ public class DebugController {
     }
 
     @GetMapping("/debug/reset")
-    public String reset() {
+    public String reset(HttpSession httpSession, Model model) {
+
+        if (httpSession.getAttribute("debug") == null) {
+            model.addAttribute("message",
+                    "You cannot reset the database as the debug-features are not enabled.");
+            return "error";
+        }
         debugService.reset();
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/debug/enable")
+    public String enable(HttpSession httpSession) {
+        httpSession.setAttribute("debug", true);
+        return "redirect:/";
+    }
+
+    @GetMapping("/debug/disable")
+    public String disable(HttpSession httpSession) {
+        httpSession.removeAttribute("debug");
         return "redirect:/";
     }
 }

@@ -26,10 +26,10 @@ public class Profile extends AbstractPersistable<Long> {
     private String path;
 
     @ManyToMany
-    private List<Profile> friends;
+    private List<Profile> friends = new ArrayList<>();
 
     @ManyToMany
-    private List<Request> requests;
+    private List<Request> requests = new ArrayList<>();
 
     @Column(name = "date", nullable = false)
     private Date date;
@@ -66,22 +66,22 @@ public class Profile extends AbstractPersistable<Long> {
      *
      * @return A String with all the data.
      */
-    @Override
-    public String toString() {
-        return "Profile{" +
-                "handle='" + handle + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", path='" + path + '\'' +
-                ", friends=" + friends +
-                ", requests=" + requests +
-                ", date=" + date +
-                ", images=" + images +
-                ", profileImage=" + profileImage +
-                ", comments=" + comments +
-                ", authorities=" + authorities +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Profile{" +
+//                "handle='" + handle + '\'' +
+//                ", password='" + password + '\'' +
+//                ", name='" + name + '\'' +
+//                ", path='" + path + '\'' +
+//                ", friends=" + friends +
+//                ", requests=" + requests +
+//                ", date=" + date +
+//                ", images=" + images +
+//                ", profileImage=" + profileImage +
+//                ", comments=" + comments +
+//                ", authorities=" + authorities +
+//                '}';
+//    }
 
     public List<SimpleGrantedAuthority> getSimpleGrantedAuthorities() {
 

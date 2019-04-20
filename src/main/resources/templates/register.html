@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 
 <head th:replace="fragments/header :: head(title = 'Register')">
     <title>Frostbook</title>
@@ -12,20 +13,49 @@
 <main>
 
     <h1>Register to Frostbook</h1>
-    <div class="row no-padding">
-        <div class="col-md-8 col-12 no-padding">
-            <p>New profile? Welcome to Frostbook! We're so glad you've decided to join.</p>
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <p>New profile? Welcome to Frostbook!</p>
         </div>
-        <div class="col-md-4 col-12 text-md-right no-padding">
+        <div class="col-md-4 col-12 text-md-right">
             <p>Already have an account? <a th:href="@{/login}">Login here</a>.</p>
         </div>
     </div>
 
-    <form target="@{/register}" method="POST" class="border border-primary p-5 rounded">
-        <div class="form-group">
-            <div class="row">
+    <hr class="mt-0" />
 
-                <div class="col-12 col-md-6">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <p>Why should I register?</p>
+            <ul>
+                <li>
+                    It's free (and most likely always will be)
+                </li>
+                <li>
+                    We follow the <a href="https://en.wikipedia.org/wiki/GDPR" target="_blank">GDPR</a>
+                </li>
+                <li>
+                    Your friends are already here
+                </li>
+                <li>
+                    You want new friends
+                </li>
+                <li>
+                    You're simply so, so bored you'd do anything
+                </li>
+            </ul>
+
+            <p>Why should I not register?</p>
+            <ul>
+                <li>No reason</li>
+            </ul>
+
+        </div>
+        <div class="col-md-6 col-12">
+            <form target="@{/register}" method="POST" th:object="${registerData}"
+                  class="border border-primary p-5 rounded">
+
+                <div class="form-group">
                     <label for="handle">Handle</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -34,12 +64,13 @@
                             </div>
                         </div>
                         <input id="handle" name="handle" placeholder="(3-12 alphanumeric characters, no spaces)"
-                               type="text"
+                               type="text" th:field="*{handle}"
                                aria-describedby="handleHelpBlock" required="required" class="form-control">
+                        <p th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}" class="form-error">error</p>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="path">Path</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -48,28 +79,26 @@
                             </div>
                         </div>
                         <input id="path" name="path" placeholder="(3-12 alphanumeric characters, no spaces)" type="text"
-                               aria-describedby="pathHelpBlock" class="form-control">
+                               th:field="*{path}" aria-describedby="pathHelpBlock" class="form-control">
+                        <p th:if="${#fields.hasErrors('path')}" th:errors="*{path}" class="form-error">error</p>
                     </div>
                 </div>
 
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="name">Name</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fa fa-address-card"></i>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-address-card"></i>
+                            </div>
+                        </div>
+                        <input id="name" name="name" placeholder="(3-64 characters, may contain spaces)" type="text"
+                               th:field="*{name}" aria-describedby="nameHelpBlock" class="form-control">
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form-error">error</p>
                     </div>
                 </div>
-                <input id="name" name="name" placeholder="(3-64 characters, may contain spaces)" type="text"
-                       aria-describedby="nameHelpBlock" class="form-control">
-            </div>
 
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -78,41 +107,35 @@
                             </div>
                         </div>
                         <input id="password" name="password" placeholder="(at least 8 characters)" type="text"
-                               aria-describedby="passwordHelpBlock" class="form-control">
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label for="password">Password (repeat)</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fa fa-key"></i>
-                            </div>
-                        </div>
-                        <input id="passwordVerification" name="passwordVerification"
-                               placeholder="(at least 8 characters)" type="text"
-                               aria-describedby="passwordHelpBlock" class="form-control">
+                               th:field="*{password}" aria-describedby="passwordHelpBlock" class="form-control">
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="form-error">error</p>
                     </div>
                 </div>
 
-            </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input name="checkbox" id="terms" type="checkbox"
+                               class="custom-control-input" value="terms">
+                        <label for="terms" class="custom-control-label">I agree to the <a href="#">Terms of Use</a></label>
+                    </div>
 
+                    <div class="custom-control custom-checkbox">
+                        <input name="checkbox" id="privacy" type="checkbox"
+                               class="custom-control-input" value="privacy">
+                        <label for="privacy" class="custom-control-label">I agree to the <a href="#">Privacy Policy</a> (inc.
+                            GDPR)</label>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <button name="submit" type="submit" class="btn btn-primary">
+                        <i class="fas fa-fw fa-user-plus"></i> Register
+                    </button>
+                </div>
+
+            </form>
         </div>
-        <div class="form-group form-check">
-            <div class="custom-control custom-checkbox">
-                <input name="checkbox" id="checkbox_0" type="checkbox" checked="checked"
-                       class="custom-control-input" value="rabbit">
-                <label for="checkbox_0" class="custom-control-label">I agree to the Terms of Use and Privacy Policy</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-        </div>
-        <div class="form-group">
-            <p>Once you submit this form, you'll be taken to your brand new profile! Isn't that exciting?</p>
-        </div>
-    </form>
+    </div>
 
     <div th:replace="fragments/footer :: footer"></div>
 
