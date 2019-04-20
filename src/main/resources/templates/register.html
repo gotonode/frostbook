@@ -64,8 +64,8 @@
                             </div>
                         </div>
                         <input id="handle" name="handle" placeholder="(3-12 alphanumeric characters, no spaces)"
-                               type="text" th:field="*{handle}"
-                               aria-describedby="handleHelpBlock" required="required" class="form-control">
+                               autofocus type="text" th:field="*{handle}"
+                               aria-describedby="handleHelpBlock" required class="form-control">
                         <p th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}" class="form-error">error</p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <input id="path" name="path" placeholder="(3-12 alphanumeric characters, no spaces)" type="text"
-                               th:field="*{path}" aria-describedby="pathHelpBlock" class="form-control">
+                               th:field="*{path}" aria-describedby="pathHelpBlock" required class="form-control">
                         <p th:if="${#fields.hasErrors('path')}" th:errors="*{path}" class="form-error">error</p>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <input id="name" name="name" placeholder="(3-64 characters, may contain spaces)" type="text"
-                               th:field="*{name}" aria-describedby="nameHelpBlock" class="form-control">
+                               th:field="*{name}" aria-describedby="nameHelpBlock" required class="form-control">
                         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form-error">error</p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <input id="password" name="password" placeholder="(at least 8 characters)" type="text"
-                               th:field="*{password}" aria-describedby="passwordHelpBlock" class="form-control">
+                               th:field="*{password}" aria-describedby="passwordHelpBlock" required class="form-control">
                         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="form-error">error</p>
                     </div>
                 </div>
@@ -115,13 +115,13 @@
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input name="checkbox" id="terms" type="checkbox"
-                               class="custom-control-input" value="terms">
+                               required class="custom-control-input" value="terms">
                         <label for="terms" class="custom-control-label">I agree to the <a href="#">Terms of Use</a></label>
                     </div>
 
                     <div class="custom-control custom-checkbox">
                         <input name="checkbox" id="privacy" type="checkbox"
-                               class="custom-control-input" value="privacy">
+                               required class="custom-control-input" value="privacy">
                         <label for="privacy" class="custom-control-label">I agree to the <a href="#">Privacy Policy</a> (inc.
                             GDPR)</label>
                     </div>
