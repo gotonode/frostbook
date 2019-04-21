@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+<head th:replace="fragments/header :: head(title = 'Gallery')">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/nav :: menu"></div>
+
+<main>
+
+    <div class="card-deck">
+        <div class="col-3 card-row" th:each="image : ${profile.images}">
+            <div class="card">
+                <img class="card-img-top" th:src="@{/img/{id}/content(id=${image.id})}" alt="Card image cap">
+                <div class="card-head">
+                    <span th:text="${image.name}"></span>
+                </div>
+                <div class="card-body">
+                    <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}" class="card-link">0 comments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" th:action="@{/img}" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" />
+        <input type="submit" value="Upload image" />
+    </form>
+
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

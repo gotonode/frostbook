@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +17,8 @@ import java.util.List;
 public class Image extends AbstractPersistable<Long> {
 
     @Column(name = "data", nullable = false)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] data;
 
     @Column(name = "name", nullable = false)
@@ -28,7 +28,7 @@ public class Image extends AbstractPersistable<Long> {
     private String contentType;
 
     @Column(name = "length", nullable = false)
-    private int length;
+    private long length;
 
     @Column(name = "description", nullable = true)
     private String description;

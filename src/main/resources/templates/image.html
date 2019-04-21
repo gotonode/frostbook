@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+<head th:replace="fragments/header :: head(title = 'Image')">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/nav :: menu"></div>
+
+<main>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    <span th:text="${image.name}"></span>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-6">
+                                Owner
+                            </div>
+                            <div class="col-6 text-right">
+                                <span th:text="${profile.handle}"></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-6">
+                                Size
+                            </div>
+                            <div class="col-6 text-right">
+                                <span th:text="${image.length}"></span> bytes
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-6">
+                                Content Type
+                            </div>
+                            <div class="col-6 text-right">
+                                <span th:text="${image.contentType}"></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-6">
+                                Uploaded
+                            </div>
+                            <div class="col-6 text-right">
+                                <span th:text="${#dates.format(image.date, 'dd-MM-yyyy')}"></span>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <div class="card-footer">
+
+                    <div class="row">
+
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i
+                                    class="far fa-heart"></i>
+                                Like (1)
+                            </button>
+
+                        </div>
+                        <div class="col-6 text-right">
+                        <form class="mr-2">
+                            <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                    class="far fa-trash-alt"></i>
+                                Delete
+                            </button>
+                        </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <p>Back to Gallery</p>
+        </div>
+        <div class="col-8 d-block w-100">
+            <img th:src="@{/img/{id}/content(id=${image.id})}" alt="Card image cap">
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

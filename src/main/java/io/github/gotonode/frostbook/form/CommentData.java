@@ -9,6 +9,6 @@ import javax.validation.constraints.Size;
 public class CommentData {
 
     @NotEmpty
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 1024)
     private String comment;
 }

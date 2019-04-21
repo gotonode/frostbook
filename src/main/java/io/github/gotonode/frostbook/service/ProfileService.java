@@ -119,4 +119,6 @@ public class ProfileService {
     public String getPath(Authentication authentication) {
         return profileRepository.findProfileByHandle(authentication.getName()).getPath();
     }
+
+
 }

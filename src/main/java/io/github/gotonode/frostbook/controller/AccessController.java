@@ -1,25 +1,26 @@
 package io.github.gotonode.frostbook.controller;
 
-import io.github.gotonode.frostbook.domain.Comment;
-import io.github.gotonode.frostbook.domain.Profile;
-import io.github.gotonode.frostbook.domain.Request;
-import io.github.gotonode.frostbook.domain.Subcomment;
+import io.github.gotonode.frostbook.domain.*;
 import io.github.gotonode.frostbook.form.CommentData;
 import io.github.gotonode.frostbook.form.LoginData;
 import io.github.gotonode.frostbook.form.SubcommentData;
 import io.github.gotonode.frostbook.service.CommentService;
+import io.github.gotonode.frostbook.service.ImageService;
 import io.github.gotonode.frostbook.service.ProfileService;
 import io.github.gotonode.frostbook.form.RegisterData;
 import io.github.gotonode.frostbook.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -33,6 +34,9 @@ public class AccessController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping("/login")
     public String login(Authentication authentication, Model model, @ModelAttribute LoginData loginData) {
@@ -86,6 +90,41 @@ public class AccessController {
         model.addAttribute("profile", profile);
 
         return "profile";
+    }
+
+    @GetMapping("/id/{path}/gallery")
+    public String gallery(@PathVariable String path, Model model) {
+        System.out.println("Requesting gallery for path: " + path);
+
+        Profile profile = profileService.findByPath(path);
+
+        if (profile == null) {
+            model.addAttribute("message", "No profile was found who owns that path. Please try the search functionality.");
+            return "error";
+        }
+
+        model.addAttribute("profile", profile);
+
+        return "gallery";
+    }
+
+    @GetMapping("/id/{path}/gallery/{id}")
+    public String image(@PathVariable String path, Model model, @PathVariable Long id) {
+        System.out.println("Requesting gallery for path: " + path);
+
+        Profile profile = profileService.findByPath(path);
+
+        if (profile == null) {
+            model.addAttribute("message", "No profile was found who owns that path. Please try the search functionality.");
+            return "error";
+        }
+
+        Image image = imageService.findById(id);
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("image", image);
+
+        return "image";
     }
 
     @GetMapping("/requests")
@@ -180,5 +219,22 @@ public class AccessController {
 
         model.addAttribute("friends", friends);
         return "friends";
+    }
+
+    @GetMapping(value = "/img/{id}/content", produces = "image/png")
+    @ResponseBody
+    public byte[] image(@PathVariable long id) throws IOException {
+        return imageService.getImageContent(id);
+    }
+
+    @PostMapping("/img")
+    @ResponseBody
+    public Image post(@RequestParam MultipartFile file, Authentication authentication) throws IOException {
+
+        if (file.getContentType() == null) {
+            return null;
+        }
+
+        return imageService.create(file, authentication);
     }
 }
