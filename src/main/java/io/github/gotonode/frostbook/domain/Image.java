@@ -3,6 +3,7 @@ package io.github.gotonode.frostbook.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Image extends AbstractPersistable<Long> {
     @Column(name = "data", nullable = false)
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] data;
 
     @Column(name = "name", nullable = false)
