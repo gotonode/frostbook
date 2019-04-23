@@ -11,7 +11,7 @@
     <version>1.0-DEV</version>
     <packaging>jar</packaging>
 
-    <!-- TODO: Uncomment the two nodes at the bottom for final release! -->
+    <!-- TODO: Uncomment the three nodes at the bottom for final release! -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -111,15 +111,17 @@
         </dependency>
 
         <!-- /SOCIAL -->
+		
+		<!-- TODO: Uncomment the following for final release! -->
 
-        <!-- TMC -->
+        <!--
         <dependency>
             <groupId>fi.helsinki.cs.tmc</groupId>
             <artifactId>edu-test-utils</artifactId>
             <version>0.4.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- /TMC -->
+        -->
 
     </dependencies>
 
