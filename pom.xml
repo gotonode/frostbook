@@ -3,12 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
     <modelVersion>4.0.0</modelVersion>
     <groupId>gotonode</groupId>
     <artifactId>frostbook</artifactId>
     <name>frostbook</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-DEV</version>
     <packaging>jar</packaging>
+
+    <!-- TODO: Uncomment the two nodes at the bottom for final release! -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,6 +28,7 @@
 
     <dependencies>
 
+        <!-- SPRING BOOT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -41,40 +45,46 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- SPRING BOOT -->
 
+        <!-- HELPER -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- /HELPER -->
 
+        <!-- DATA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
+        <!-- DATA -->
 
+        <!-- DATABASE -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <!-- DATABASE -->
 
+        <!-- TESTING -->
         <dependency>
             <groupId>org.fluentlenium</groupId>
             <artifactId>fluentlenium-junit</artifactId>
@@ -91,6 +101,14 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>htmlunit-driver</artifactId>
         </dependency>
+        <!-- /TESTING -->
+
+        <!-- SOCIAL -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+        </dependency>
+        <!-- /SOCIAL -->
 
         <!-- TMC -->
         <dependency>
@@ -99,6 +117,7 @@
             <version>0.4.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- /TMC -->
 
     </dependencies>
 
@@ -111,6 +130,9 @@
         </plugins>
     </build>
 
+    <!-- TODO: Uncomment the following for final release! -->
+
+    <!--
     <repositories>
         <repository>
             <id>tmc</id>
@@ -124,7 +146,9 @@
             </snapshots>
         </repository>
     </repositories>
+    -->
 
+    <!--
     <pluginRepositories>
         <pluginRepository>
             <id>tmc</id>
@@ -138,4 +162,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+    -->
+
 </project>
