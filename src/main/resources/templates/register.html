@@ -53,7 +53,7 @@
         </div>
         <div class="col-md-6 col-12">
             <form th:action="@{/register}" method="POST" th:object="${registerData}"
-                  class="border border-primary p-5 rounded">
+                  class="border border-primary p-5 rounded access-form">
 
                 <div class="form-group">
                     <label for="handle">Handle</label>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <input id="handle" name="handle" placeholder="(3-12 alphanumeric characters, no spaces)"
-                               autofocus type="text" th:field="*{handle}"
+                               type="text" th:field="*{handle}"
                                aria-describedby="handleHelpBlock" required class="form-control">
                         <p th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}" class="form-error">error</p>
                     </div>

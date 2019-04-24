@@ -41,7 +41,7 @@
             </div>
 
             <form th:action="@{/login}" method="POST" th:object="${loginData}"
-                  class="border border-primary p-5 rounded">
+                  class="border border-primary p-5 rounded access-form">
 
                 <div class="form-group">
                     <label for="handle">Handle</label>
@@ -51,7 +51,7 @@
                                 <i class="fa fa-at"></i>
                             </div>
                         </div>
-                        <input id="handle" name="handle" placeholder="" autofocus
+                        <input id="handle" name="handle" placeholder=""
                                type="text" th:field="*{handle}"
                                aria-describedby="handleHelpBlock" required class="form-control">
                         <p th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}" class="form-error">error</p>
