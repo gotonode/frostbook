@@ -39,7 +39,8 @@
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/requests}">
-                            <i class="fas fa-fw fa-user-plus"></i> Requests </a>
+                            <i class="fas fa-fw fa-user-plus"></i> Requests
+                            <span id="request-count" class="badge badge-primary d-none"></span></a>
                     </li>
 
                     <!-- DEBUG MODE -->

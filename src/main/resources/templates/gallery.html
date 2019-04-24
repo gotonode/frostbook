@@ -27,9 +27,29 @@
     </div>
 
     <form method="POST" th:action="@{/img}" enctype="multipart/form-data">
-        <input type="file" name="file" id="file" />
-        <input type="submit" value="Upload image" />
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" name="file" id="file" class="custom-control-input" />
+                <label for="file" class="custom-file-label">Choose your image</label>
+            </div>
+        </div>
+        <div class="input-group">
+
+            <input type="text" name="description" id="description" class="form-control" placeholder="Description" />
+
+        </div>
+        <div class="input-group">
+            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-file-upload"></i> Upload image
+            </button>
+        </div>
     </form>
+
+    <script defer>
+        $(".custom-file-input").on("change", function () {
+            const fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 
 </main>
 

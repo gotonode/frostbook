@@ -29,58 +29,8 @@ public class DefaultController {
         return "help";
     }
 
-    //@PreAuthorize
     @GetMapping("/about")
     public String about() {
         return "about";
-    }
-
-    @GetMapping("/id")
-    public String redirectProfile(Authentication authentication) {
-
-        if (authentication == null) {
-            return "redirect:/login";
-        } else {
-            String path = profileService.getPath(authentication);
-            return "redirect:/id/" + path;
-        }
-    }
-
-    @PostMapping("/search")
-    public String searchPost(@RequestParam String query) {
-        
-        System.out.println("Search query: " + query);
-
-        query = query.trim();
-
-        if (query.isEmpty()) {
-            return "redirect:/search";
-        } else {
-            return "redirect:/search?query=" + query;
-        }
-    }
-
-    @GetMapping("/search")
-    public String search(@RequestParam(required = false) String query, Model model) {
-
-        if (query == null) {
-            query = "";
-        } else {
-            query = query.trim();
-        }
-
-        List<Profile> profiles;
-
-        if (query.isEmpty()) {
-            profiles = profileService.findAll();
-        } else {
-            profiles = profileService.find(query);
-        }
-
-        model.addAttribute("query", query.trim());
-        model.addAttribute("profiles", profiles);
-        model.addAttribute("count", profiles.size());
-
-        return "search";
     }
 }

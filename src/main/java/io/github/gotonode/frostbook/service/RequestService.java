@@ -5,6 +5,7 @@ import io.github.gotonode.frostbook.domain.Request;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import io.github.gotonode.frostbook.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class RequestService {
     @Transactional
     public void create(String handle) {
 
-        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Profile currentProfile = profileRepository.findProfileByHandle(userDetails.getUsername());
 
@@ -56,7 +57,7 @@ public class RequestService {
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
-        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Profile currentProfile = profileRepository.findProfileByHandle(userDetails.getUsername());
 
         currentProfile.getFriends().add(fromProfile);
@@ -77,8 +78,6 @@ public class RequestService {
 
         requestRepository.delete(request);
 
-
-
     }
 
     public void remove(String handle) {
@@ -87,7 +86,7 @@ public class RequestService {
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
-        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Profile currentProfile = profileRepository.findProfileByHandle(userDetails.getUsername());
 
         currentProfile.getRequests().remove(request);
@@ -95,5 +94,13 @@ public class RequestService {
         profileRepository.save(currentProfile);
 
         requestRepository.delete(request);
+    }
+
+    public long getRequestCount(Authentication authentication) {
+
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+
+        // TODO: Optimize this later.
+        return profile.getRequests().size();
     }
 }
