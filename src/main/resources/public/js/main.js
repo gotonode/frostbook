@@ -1,4 +1,3 @@
-
 var http = new XMLHttpRequest();
 
 http.onreadystatechange = function () {
@@ -16,7 +15,9 @@ http.onreadystatechange = function () {
 
 };
 
-document.addEventListener("DOMContentLoaded", function(){
-    http.open("GET", "/query/requests/count");
-    http.send();
-});
+
+
+// function f() {
+//     http.open("GET", "/query/requests/count");
+//     http.send();
+// }

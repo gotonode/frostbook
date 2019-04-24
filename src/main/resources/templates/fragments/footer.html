@@ -93,6 +93,13 @@
     <script src="/js/main.js" defer></script>
     <script src="/js/external.js" defer></script>
 
+    <script sec:authorize="isAuthenticated()" defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            http.open("GET", "/query/requests/count");
+            http.send();
+        });
+    </script>
+
 </div>
 
 </body>
