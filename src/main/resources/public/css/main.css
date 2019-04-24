@@ -120,3 +120,8 @@ a.autologin {
 .form-error {
     color: darkred;
 }
+
+.login-image {
+    font-size: 20em;
+    color: cornflowerblue;
+}
