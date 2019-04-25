@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+<head th:replace="fragments/header :: head(title = 'About')">
+    <title>Frostbook</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/nav :: menu"></div>
+
+<main>
+
+    <h1>Debug</h1>
+    <p>These features are so much fun! They make testing this platform a breeze.</p>
+
+    <p>The platform works normally (in "production mode") when these features are turned off. In actual,
+        production-production mode, enabling debug-features will naturally <em>not be possible</em>.</p>
+
+    <h2>What can I do with these?</h2>
+
+    <p>Here's some neat things you can do with them:</p>
+
+    <ul>
+
+        <li>Create a random profile (with or without admin privileges)</li>
+        <li>Autologin to any account from the search results</li>
+        <li>Populate the database (see below)</li>
+        <li>Make the current user popular (see below, below)</li>
+        <li>Reset the database, deleting all data but preserving database structure</li>
+
+    </ul>
+
+    <h2>Populating the database; what's the deal there?</h2>
+
+    <p>When you populate the database, many things will happen:</p>
+    <ul>
+        <li>We create an admin profile</li>
+        <li>We create 4 normal user profiles</li>
+        <li>The admin profile will befriend 2 of the normal users</li>
+        <li>The remaining users will send a friend request to the admin</li>
+        <li>Users will send comments to the admin's profile page</li>
+    </ul>
+
+    <h2>How to become popular, quickly?</h2>
+    <p>Once you make the current user popular, this will happen:</p>
+    <ul>
+        <li>We create 5 random profiles and have them send you a friend request</li>
+        <li>We create 5 more random profiles, and INSTANTLY make them your friends</li>
+    </ul>
+
+    <h2>What's the password?</h2>
+
+    <p>The password for randomly-created profiles is "<span id="debug-password">debug</span>". Creative, wouldn't you
+        say?</p>
+
+    <p>But you don't need that password unless you're testing the login feature since you can autologin from the search
+        results!</p>
+
+    <h2>How to disable?</h2>
+
+    <p>To disable these features, see the Debug-menu.</p>
+
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

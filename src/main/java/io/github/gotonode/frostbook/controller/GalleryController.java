@@ -5,6 +5,10 @@ import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.service.ImageService;
 import io.github.gotonode.frostbook.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +28,14 @@ public class GalleryController {
 
     @GetMapping("/id/{path}/gallery")
     public String gallery(@PathVariable String path, Model model) {
+
         System.out.println("Requesting gallery for path: " + path);
 
         Profile profile = profileService.findByPath(path);
 
         if (profile == null) {
-            model.addAttribute("message", "No profile was found who owns that path. Please try the search functionality.");
+            model.addAttribute("message",
+                    "No profile was found who owns that gallery path. Please try the search functionality.");
             return "error";
         }
 
@@ -40,12 +46,13 @@ public class GalleryController {
 
     @GetMapping("/id/{path}/gallery/{id}")
     public String image(@PathVariable String path, Model model, @PathVariable Long id) {
-        System.out.println("Requesting gallery for path: " + path);
+
+        System.out.println("Requesting image for ID: " + id);
 
         Profile profile = profileService.findByPath(path);
 
         if (profile == null) {
-            model.addAttribute("message", "No profile was found who owns that path. Please try the search functionality.");
+            model.addAttribute("message", "No profile was found who owns that gallery image path. Please try the search functionality.");
             return "error";
         }
 
@@ -57,20 +64,47 @@ public class GalleryController {
         return "image";
     }
 
-    @GetMapping(value = "/img/{id}/content", produces = "image/png")
-    @ResponseBody
-    public byte[] image(@PathVariable long id) {
-        return imageService.getImageContent(id);
+    @GetMapping(value = "/gallery/{id}")
+    public ResponseEntity<byte[]> image(@PathVariable Long id) {
+
+        Image image = imageService.findById(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(image.getContentType()));
+        headers.setContentLength(image.getLength());
+
+        return new ResponseEntity<>(image.getData(), headers, HttpStatus.CREATED);
     }
 
-    @PostMapping("/img")
-    @ResponseBody
-    public Image post(@RequestParam MultipartFile file, Authentication authentication) throws IOException {
+    @PostMapping("/upload")
+    public String upload(Model model, @RequestParam MultipartFile file, @RequestParam String description,
+                         Authentication authentication) throws IOException {
 
-        if (file.getContentType() == null) {
-            return null;
+        // TODO: Is this method's URI correct for REST?
+
+        // We don't need to pass the path variable as anyone's who's uploading images
+        // is only doing so onto their own gallery.
+
+        String type = file.getContentType();
+
+        if (type == null) {
+            model.addAttribute("message", "Could not determine image's content type.");
+            return "error";
         }
 
-        return imageService.create(file, authentication);
+        type = type.trim();
+
+        System.out.println("Attempting to create an image of type: " + type);
+
+        if (!type.equals("image/png") && !type.equals("image/jpeg")) {
+            model.addAttribute("message", "Incorrect image type. Please try a JPEG ('JPG') or PNG.");
+            return "error";
+        }
+
+        Image image = imageService.create(file, description, authentication.getName());
+
+        System.out.println("Created a new image: " + image);
+
+        return "redirect:/gallery";
     }
 }

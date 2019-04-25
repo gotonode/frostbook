@@ -20,4 +20,11 @@ public class Request extends AbstractPersistable<Long> {
     @Column(name = "date", nullable = false)
     private Date date;
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "fromProfile(handle)=" + fromProfile.getHandle() +
+                ", date=" + date +
+                '}';
+    }
 }

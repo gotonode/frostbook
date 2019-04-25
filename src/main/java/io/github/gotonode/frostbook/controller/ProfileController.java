@@ -28,9 +28,19 @@ public class ProfileController {
         }
     }
 
+    @GetMapping("/gallery")
+    public String redirectGallery(Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/login";
+        } else {
+            String path = profileService.getPath(authentication);
+            return "redirect:/id/" + path + "/gallery";
+        }
+    }
+
     @GetMapping("/id/{path}")
-    public String okay(@PathVariable String path, Model model) {
-        System.out.println("Requesting path: " + path);
+    public String profile(@PathVariable String path, Model model) {
 
         Profile profile = profileService.findByPath(path);
 

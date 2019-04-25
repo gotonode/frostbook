@@ -15,4 +15,12 @@ public class LoginData {
     @NotEmpty
     //@Size(min = 64, max = 64)
     private String password;
+
+    @Override
+    public String toString() {
+        return "LoginData{" +
+                "handle='" + handle + '\'' +
+                ", password='" + String.valueOf("[PROTECTED]") + '\'' +
+                '}';
+    }
 }

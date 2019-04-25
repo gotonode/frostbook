@@ -69,6 +69,14 @@ h1 {
     font-size: 2em;
 }
 
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
 #error-message {
     font-family: monospace;
     line-height: 1em;
@@ -89,14 +97,9 @@ a.autologin {
 
 .alert-fixed {
     position: fixed;
-    opacity: 0.9;
     z-index: 1;
 }
 
-#welcome-image {
-    background-image: url("/img/carousel01.png");
-    height: 500px;
-}
 
 .carousel-caption {
     color: black;
@@ -128,4 +131,13 @@ a.autologin {
 
 .access-form {
     background-color: aliceblue;
+}
+
+.transparent {
+    opacity: 0.9;
+}
+
+#debug-password {
+    font-family: monospace;
+    line-height: 1em;
 }

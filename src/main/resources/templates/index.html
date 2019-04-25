@@ -12,11 +12,8 @@
 
 <main>
 
-    <div th:if="${session.debug}" class="alert alert-debug alert-fixed" role="alert">
-        <strong>Debug features!</strong> You can, for an example, instantly create random profiles, log in to any
-        account from a link in the search results, and reset the database. Have fun!
-        <hr/>
-        <p class="mb-0">To disable these features, check the Debug-menu or clear your cookies.</p>
+    <div th:if="${session.debug}" class="alert alert-debug" role="alert">
+        <strong>Debug features enabled!</strong> In production, enabling these features will not be possible.
     </div>
 
     <div class="bd-example">

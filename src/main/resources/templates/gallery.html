@@ -15,7 +15,7 @@
     <div class="card-deck">
         <div class="col-3 card-row" th:each="image : ${profile.images}">
             <div class="card">
-                <img class="card-img-top" th:src="@{/img/{id}/content(id=${image.id})}" alt="Card image cap">
+                <img class="card-img-top" th:src="@{/gallery/{id}(id=${image.id})}" alt="${image.description}}">
                 <div class="card-head">
                     <span th:text="${image.name}"></span>
                 </div>
@@ -46,7 +46,7 @@
 
     <script defer>
         $(".custom-file-input").on("change", function () {
-            const fileName = $(this).val().split("\\").pop();
+            var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     </script>

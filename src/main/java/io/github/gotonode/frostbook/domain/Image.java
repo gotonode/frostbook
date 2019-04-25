@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Image extends AbstractPersistable<Long> {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Type(type = "org.hibernate.type.ImageType")
+    @JsonIgnore
     private byte[] data;
 
     @Column(name = "name", nullable = false)
@@ -43,4 +45,18 @@ public class Image extends AbstractPersistable<Long> {
 
     @ManyToMany
     private List<Subcomment> subcomments = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "data=" + String.valueOf("[REDACTED]") +
+                ", name='" + name + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", length=" + length +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", likedBy(count)=" + likedBy.size() +
+                ", subcomments(count)=" + subcomments.size() +
+                '}';
+    }
 }

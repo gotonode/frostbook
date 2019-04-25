@@ -24,4 +24,13 @@ public class Subcomment extends AbstractPersistable<Long> {
 
     @Column(name = "date", nullable = false)
     private Date date;
+
+    @Override
+    public String toString() {
+        return "Subcomment{" +
+                "fromProfile(handle)=" + fromProfile.getHandle() +
+                ", comment='" + comment + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

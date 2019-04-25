@@ -8,7 +8,14 @@ import javax.validation.constraints.Size;
 @Data
 public class CommentData {
 
-    @NotEmpty
-    @Size(min = 1, max = 1024)
+    @NotEmpty(message = "Your comment cannot be empty.")
+    @Size(min = 1, max = 1024, message = "Your comment must be between 1 and 1024 characters.")
     private String comment;
+
+    @Override
+    public String toString() {
+        return "CommentData{" +
+                "comment='" + comment + '\'' +
+                '}';
+    }
 }

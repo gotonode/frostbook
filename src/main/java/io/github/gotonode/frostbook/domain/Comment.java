@@ -3,7 +3,6 @@ package io.github.gotonode.frostbook.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -15,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
 public class Comment extends AbstractPersistable<Long> {
 
     //@Column(name = "from_user", nullable = false)
@@ -32,4 +32,15 @@ public class Comment extends AbstractPersistable<Long> {
 
     @ManyToMany
     private List<Profile> likedBy = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "fromProfile(handle)=" + fromProfile.getHandle() +
+                ", comment='" + comment + '\'' +
+                ", date=" + date +
+                ", subcomments(count)=" + subcomments.size() +
+                ", likedBy(count)=" + likedBy.size() +
+                '}';
+    }
 }

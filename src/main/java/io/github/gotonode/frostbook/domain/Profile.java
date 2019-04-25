@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,7 @@ public class Profile extends AbstractPersistable<Long> {
     private String handle;
 
     @Column(name = "password", nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(name = "name", nullable = false)
@@ -59,29 +61,22 @@ public class Profile extends AbstractPersistable<Long> {
 
     }
 
-    /**
-     * Displays information about the object.
-     * <p>
-     * Note that it's somewhat okay to print the password as it is already hashed.
-     *
-     * @return A String with all the data.
-     */
-//    @Override
-//    public String toString() {
-//        return "Profile{" +
-//                "handle='" + handle + '\'' +
-//                ", password='" + password + '\'' +
-//                ", name='" + name + '\'' +
-//                ", path='" + path + '\'' +
-//                ", friends=" + friends +
-//                ", requests=" + requests +
-//                ", date=" + date +
-//                ", images=" + images +
-//                ", profileImage=" + profileImage +
-//                ", comments=" + comments +
-//                ", authorities=" + authorities +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "handle='" + handle + '\'' +
+                ", password='" + String.valueOf("[PROTECTED]") + '\'' +
+                ", name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", friends(count)=" + friends.size() +
+                ", requests(count)=" + requests.size() +
+                ", date=" + date +
+                ", images(count)=" + images.size() +
+                ", profileImage=" + profileImage +
+                ", comments(count)=" + comments.size() +
+                ", authorities=" + String.valueOf("[PROTECTED]") +
+                '}';
+    }
 
     public List<SimpleGrantedAuthority> getSimpleGrantedAuthorities() {
 
