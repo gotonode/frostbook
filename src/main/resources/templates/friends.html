@@ -28,7 +28,7 @@
         <tbody>
         <tr th:each="friend : ${friends}">
             <td>
-                <span th:text="${friend.handle}"></span></a>
+                <span th:text="${friend.handle}"></span>
             </td>
             <td>
                 <a th:href="@{/id/} + ${friend.path}"><span th:text="'/' + ${friend.path}"></span></a>
@@ -37,8 +37,9 @@
                 friend.name
             </td>
             <td>
-                <form method="POST" th:action="@{/friends/} + ${friend.handle} + '/unfriend'">
-                    <button type="button" onclick="alert('Not implemented yet.');" class="btn btn-outline-danger w-100"><i class="far fa-trash-alt"></i> Unfriend
+                <form method="POST" th:action="@{/id/} + ${friend.path} + '/friends/remove'">
+                    <button type="submit" class="btn btn-outline-danger w-100">
+                        <i class="far fa-trash-alt"></i> Unfriend
                     </button>
                 </form>
             </td>

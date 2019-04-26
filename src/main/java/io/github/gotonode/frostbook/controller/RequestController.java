@@ -23,6 +23,17 @@ public class RequestController {
     private ProfileService profileService;
 
     @GetMapping("/requests")
+    private String base(Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/login";
+        } else {
+            Profile profile = profileService.findByHandle(authentication.getName());
+            return "redirect:/id/" + profile.getPath() + "/requests";
+        }
+    }
+
+    @GetMapping("/id/{path}/requests")
     public String requests(Model model) {
 
         List<Request> requests = requestService.getRequests();
@@ -31,63 +42,25 @@ public class RequestController {
         return "requests";
     }
 
-    @PostMapping("/requests/add/{handle}")
-    public String addRequest(Model model, @PathVariable String handle, Authentication authentication) {
+    @PostMapping("/id/{path}/requests/accept")
+    public String accept(@PathVariable String path) {
 
-        // TODO: Refactor the following!
-        if (authentication.getName().equals(handle.trim())) {
-            model.addAttribute("message", "As sad as it is, you cannot add yourself as your own friend.");
-            return "error";
-        }
-
-        Profile targetProfile = profileService.findByHandle(handle);
-
-        List<Request> requests = targetProfile.getRequests();
-
-        // TODO: Optimize and refactor the following!
-        for (Request request : requests) {
-            if (request.getFromProfile().getHandle().equals(authentication.getName())) {
-                model.addAttribute("message",
-                        "You've already sent them a friend request. Feeling lonely?");
-                return "error";
-            }
-        }
-
-        List<Profile> friends = profileService.getFriends(authentication);
-
-        // TODO: Optimize and refactor the following!
-        for (Profile friend : friends) {
-            if (friend.getHandle().equals(handle.trim())) {
-                model.addAttribute("message",
-                        "Cannot send a friend request to an existing friend! What would be the point?");
-                return "error";
-            }
-        }
-
-        requestService.create(handle);
-
-        return "redirect:/id/" + targetProfile.getPath();
-    }
-
-    @PostMapping("/requests/{handle}/accept")
-    public String confirmRequest(@PathVariable String handle) {
-
-        requestService.accept(handle);
+        requestService.accept(path);
 
         return "redirect:/requests";
     }
 
-    @PostMapping("/requests/{handle}/remove")
-    public String removeRequest(@PathVariable String handle) {
+    @PostMapping("/id/{path}/requests/remove")
+    public String remove(@PathVariable String path) {
 
-        requestService.remove(handle);
+        requestService.remove(path);
 
         return "redirect:/requests";
     }
 
     @GetMapping(value = "/query/requests/count", produces = "application/json")
     @ResponseBody
-    public String getRequestCount(Authentication authentication) {
+    public String count(Authentication authentication) {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("count", requestService.getRequestCount(authentication));

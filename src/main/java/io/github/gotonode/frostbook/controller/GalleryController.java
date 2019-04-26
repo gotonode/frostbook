@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -28,6 +27,17 @@ public class GalleryController {
 
     @Autowired
     private ImageService imageService;
+
+    @GetMapping("/gallery")
+    public String base(Authentication authentication) {
+
+        if (authentication == null) {
+            return "redirect:/login";
+        } else {
+            String path = profileService.getPath(authentication);
+            return "redirect:/id/" + path + "/gallery";
+        }
+    }
 
     @GetMapping("/id/{path}/gallery")
     public String gallery(@PathVariable String path, Model model) {

@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -18,24 +17,13 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping("/id")
-    public String redirectProfile(Authentication authentication) {
+    public String base(Authentication authentication) {
 
         if (authentication == null) {
             return "redirect:/login";
         } else {
             String path = profileService.getPath(authentication);
             return "redirect:/id/" + path;
-        }
-    }
-
-    @GetMapping("/gallery")
-    public String redirectGallery(Authentication authentication) {
-
-        if (authentication == null) {
-            return "redirect:/login";
-        } else {
-            String path = profileService.getPath(authentication);
-            return "redirect:/id/" + path + "/gallery";
         }
     }
 
@@ -53,14 +41,4 @@ public class ProfileController {
 
         return "profile";
     }
-
-    @GetMapping("/friends")
-    public String friends(Model model, Authentication authentication) {
-
-        List<Profile> friends = profileService.getFriends(authentication);
-
-        model.addAttribute("friends", friends);
-        return "friends";
-    }
-
 }

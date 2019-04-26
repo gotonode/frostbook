@@ -13,66 +13,37 @@
 <main>
 
     <div class="row">
-        <div class="col-6 text-center">
-            <span th:text="${profile.handle}"></span>
+        <div class="col-12 col-md-3">
+            <div th:replace="fragments/profile :: profile"></div>
         </div>
-        <div class="col-6 text-center">
-            Back to profile
-        </div>
-    </div>
 
-    <div class="card-columns">
-        <div th:each="image : ${profile.images}">
-            <div class="card">
-                <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}">
-                    <img class="card-img-top"
-                         th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}"
-                         alt="${image.description}}">
-                </a>
-                <div class="card-head">
-                    <!--<span th:text="${#dates.format(image.date, 'dd-MM-yyyy')}"></span>-->
+        <div class="col-12 col-md-9">
+
+            <div sec:authorize="isAuthenticated()"
+                 th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
+                <div th:replace="fragments/gallery :: upload"></div>
+                <hr />
+            </div>
+
+            <div th:if="${#lists.size(profile.images) == 0}">
+                <strong>No images yet!</strong>
+                <div th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
+                    <p>Start by uploading some today.</p>
                 </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-6">
-                            <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}"
-                               class="card-link"><span th:text="${#lists.size(image.likedBy)}"></span> like<span s</a>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}"
-                               class="card-link"><span th:text="${#lists.size(image.subcomments)}"></span> comments</a>
-                        </div>
-                    </div>
+                <div th:if="${!#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
+                    <p>Why not encourage the user to upload some images by sending a comment to them?</p>
+
                 </div>
 
             </div>
-        </div>
-    </div>
 
-    <form method="POST" th:action="@{/upload}" enctype="multipart/form-data">
-        <div class="input-group">
-            <div class="custom-file">
-                <input type="file" name="file" id="file" class="custom-control-input" />
-                <label for="file" class="custom-file-label">Choose your image</label>
+            <div th:if="${#lists.size(profile.images) > 0}">
+                <div th:replace="fragments/gallery :: gallery"></div>
             </div>
-        </div>
-        <div class="input-group">
-
-            <input type="text" name="description" id="description" class="form-control" placeholder="Description" />
 
         </div>
-        <div class="input-group">
-            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-file-upload"></i> Upload image
-            </button>
-        </div>
-    </form>
 
-    <script defer>
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-    </script>
+    </div>
 
 </main>
 

@@ -17,20 +17,6 @@ public class SearchController {
     @Autowired
     private ProfileService profileService;
 
-    @PostMapping("/search")
-    public String searchPost(@RequestParam String query) {
-
-        System.out.println("Search query: " + query);
-
-        query = query.trim();
-
-        if (query.isEmpty()) {
-            return "redirect:/search";
-        } else {
-            return "redirect:/search?query=" + query;
-        }
-    }
-
     @GetMapping("/search")
     public String search(@RequestParam(required = false) String query, Model model) {
 
@@ -48,10 +34,24 @@ public class SearchController {
             profiles = profileService.find(query);
         }
 
-        model.addAttribute("query", query.trim());
+        model.addAttribute("query", query);
         model.addAttribute("profiles", profiles);
         model.addAttribute("count", profiles.size());
 
         return "search";
+    }
+
+    @PostMapping("/search")
+    public String searchPost(@RequestParam String query) {
+
+        System.out.println("Search query: " + query);
+
+        query = query.trim();
+
+        if (query.isEmpty()) {
+            return "redirect:/search";
+        } else {
+            return "redirect:/search?query=" + query;
+        }
     }
 }

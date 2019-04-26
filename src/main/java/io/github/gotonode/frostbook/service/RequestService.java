@@ -32,28 +32,37 @@ public class RequestService {
     }
 
     @Transactional
-    public void create(String handle) {
+    public void befriend(Profile targetProfile, String handle) {
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Profile currentProfile = profileRepository.findProfileByHandle(userDetails.getUsername());
+        Profile currentProfile = profileRepository.findProfileByHandle(handle);
 
         Request request = new Request();
         request.setDate(Date.from(Instant.now()));
-        Profile profile = profileRepository.findProfileByHandle(handle);
         request.setFromProfile(currentProfile);
 
         requestRepository.save(request);
 
-        profile.getRequests().add(request);
+        targetProfile.getRequests().add(request);
 
-        profileRepository.save(profile);
+        profileRepository.save(targetProfile);
     }
 
     @Transactional
-    public void accept(String handle) {
+    public void unfriend(Profile targetProfile, String handle) {
 
-        Profile fromProfile = profileRepository.findProfileByHandle(handle);
+        Profile currentProfile = profileRepository.findProfileByHandle(handle);
+
+        targetProfile.getFriends().remove(currentProfile);
+        currentProfile.getFriends().remove(targetProfile);
+
+        profileRepository.save(targetProfile);
+        profileRepository.save(currentProfile);
+    }
+
+    @Transactional
+    public void accept(String path) {
+
+        Profile fromProfile = profileRepository.findProfileByPath(path);
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
@@ -80,9 +89,9 @@ public class RequestService {
 
     }
 
-    public void remove(String handle) {
+    public void remove(String path) {
 
-        Profile fromProfile = profileRepository.findProfileByHandle(handle);
+        Profile fromProfile = profileRepository.findProfileByPath(path);
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
@@ -103,4 +112,6 @@ public class RequestService {
         // TODO: Optimize this later.
         return profile.getRequests().size();
     }
+
+
 }
