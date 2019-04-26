@@ -66,28 +66,30 @@
                     <div class="row">
 
                         <div class="col-6">
-                            <button type="submit" class="btn btn-sm btn-outline-success"><i
-                                    class="far fa-heart"></i>
-                                Like (1)
-                            </button>
-
+                            <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'" method="POST">
+                                <button type="submit" class="btn btn-sm btn-outline-success"><i
+                                        class="far fa-heart"></i>
+                                    Like <span th:if="${#lists.size(image.likedBy)} > 0">(<span th:text="${#lists.size(image.likedBy)}"></span>)</span>
+                                </button>
+                            </form>
                         </div>
                         <div class="col-6 text-right">
-                        <form class="mr-2">
-                            <button type="submit" class="btn btn-sm btn-outline-danger"><i
-                                    class="far fa-trash-alt"></i>
-                                Delete
-                            </button>
-                        </form>
+                            <form class="mr-2">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                        class="far fa-trash-alt"></i>
+                                    Delete
+                                </button>
+                            </form>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <p>Back to Gallery</p>
+            <div class="col-12 mt-2 text-center"><a th:href="@{/id/} + ${profile.path} + '/gallery'">Back to Gallery</a></div>
+
         </div>
         <div class="col-8 d-block w-100">
-            <img th:src="@{/img/{id}/content(id=${image.id})}" alt="Card image cap">
+            <img th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}" alt="${image.description}}">
         </div>
     </div>
 

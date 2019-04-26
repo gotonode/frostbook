@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.controller;
 
+import io.github.gotonode.frostbook.MyApplication;
 import io.github.gotonode.frostbook.domain.Image;
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.service.ImageService;
@@ -15,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
@@ -47,8 +50,6 @@ public class GalleryController {
     @GetMapping("/id/{path}/gallery/{id}")
     public String image(@PathVariable String path, Model model, @PathVariable Long id) {
 
-        System.out.println("Requesting image for ID: " + id);
-
         Profile profile = profileService.findByPath(path);
 
         if (profile == null) {
@@ -64,7 +65,7 @@ public class GalleryController {
         return "image";
     }
 
-    @GetMapping(value = "/gallery/{id}")
+    @GetMapping("/id/{path}/gallery/{id}/content")
     public ResponseEntity<byte[]> image(@PathVariable Long id) {
 
         Image image = imageService.findById(id);
@@ -74,6 +75,30 @@ public class GalleryController {
         headers.setContentLength(image.getLength());
 
         return new ResponseEntity<>(image.getData(), headers, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/id/{path}/gallery/{id}/like")
+    public String like(Model model, @PathVariable String path, @PathVariable Long id,
+                       Authentication authentication, HttpServletRequest httpServletRequest) {
+
+        Image image = imageService.like(id, authentication.getName());
+
+        if (image == null) {
+            model.addAttribute("message",
+                    "Cannot like this image. Either you have already liked it or the image has been deleted.");
+            return "error";
+
+        }
+
+        System.out.println("Liked image with ID: " + id);
+
+        String referer = httpServletRequest.getHeader("Referer");
+
+        if (referer == null || referer.trim().isEmpty()) {
+            return "redirect:/id/" + path + "/gallery/";
+        }
+
+        return "redirect:" + referer;
     }
 
     @PostMapping("/upload")
@@ -102,6 +127,12 @@ public class GalleryController {
         }
 
         Image image = imageService.create(file, description, authentication.getName());
+
+        if (image == null) {
+            model.addAttribute("message", "You already have the maximum (" +
+                    MyApplication.MAX_GALLERY_IMAGES_PER_USER + ") number of images on your gallery.");
+            return "error";
+        }
 
         System.out.println("Created a new image: " + image);
 

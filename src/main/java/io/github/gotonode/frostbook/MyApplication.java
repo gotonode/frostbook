@@ -31,6 +31,8 @@ import org.springframework.context.annotation.ComponentScan;
         "io.github.gotonode.frostbook.form"})
 public class MyApplication {
 
+    public static final int MAX_GALLERY_IMAGES_PER_USER = 10;
+
     public static void main(String[] args) {
         SpringApplication.run(MyApplication.class, args);
     }

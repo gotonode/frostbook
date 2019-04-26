@@ -12,21 +12,44 @@
 
 <main>
 
-    <div class="card-deck">
-        <div class="col-3 card-row" th:each="image : ${profile.images}">
+    <div class="row">
+        <div class="col-6 text-center">
+            <span th:text="${profile.handle}"></span>
+        </div>
+        <div class="col-6 text-center">
+            Back to profile
+        </div>
+    </div>
+
+    <div class="card-columns">
+        <div th:each="image : ${profile.images}">
             <div class="card">
-                <img class="card-img-top" th:src="@{/gallery/{id}(id=${image.id})}" alt="${image.description}}">
+                <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}">
+                    <img class="card-img-top"
+                         th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}"
+                         alt="${image.description}}">
+                </a>
                 <div class="card-head">
-                    <span th:text="${image.name}"></span>
+                    <!--<span th:text="${#dates.format(image.date, 'dd-MM-yyyy')}"></span>-->
                 </div>
-                <div class="card-body">
-                    <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}" class="card-link">0 comments</a>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}"
+                               class="card-link"><span th:text="${#lists.size(image.likedBy)}"></span> like<span s</a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a th:href="@{/id/} + ${profile.path} + '/gallery/' + ${image.id}"
+                               class="card-link"><span th:text="${#lists.size(image.subcomments)}"></span> comments</a>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 
-    <form method="POST" th:action="@{/img}" enctype="multipart/form-data">
+    <form method="POST" th:action="@{/upload}" enctype="multipart/form-data">
         <div class="input-group">
             <div class="custom-file">
                 <input type="file" name="file" id="file" class="custom-control-input" />
