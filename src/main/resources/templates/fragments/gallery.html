@@ -35,7 +35,7 @@
 </div>
 
     <div th:fragment="upload">
-        <form method="POST" th:action="@{/upload}" enctype="multipart/form-data">
+        <form method="POST" th:action="@{/id/} + ${profile.path} + '/gallery'" enctype="multipart/form-data">
             <div class="input-group">
                 <div class="custom-file">
                     <input type="file" name="file" id="file" class="custom-control-input" />

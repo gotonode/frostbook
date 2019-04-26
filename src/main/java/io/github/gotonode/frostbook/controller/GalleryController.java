@@ -111,14 +111,9 @@ public class GalleryController {
         return "redirect:" + referer;
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/id/{path}/gallery")
     public String upload(Model model, @RequestParam MultipartFile file, @RequestParam String description,
-                         Authentication authentication) throws IOException {
-
-        // TODO: Is this method's URI correct for REST?
-
-        // We don't need to pass the path variable as anyone's who's uploading images
-        // is only doing so onto their own gallery.
+                         Authentication authentication, @PathVariable String path) throws IOException {
 
         String type = file.getContentType();
 
