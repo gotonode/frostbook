@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.form;
 
+import io.github.gotonode.frostbook.MyApplication;
 import lombok.Data;
 
 import javax.validation.constraints.Pattern;
@@ -23,7 +24,7 @@ public class RegisterData {
     public String toString() {
         return "RegisterData{" +
                 "handle='" + handle + '\'' +
-                ", password(length)='" + password.length() + '\'' +
+                ", password='" + MyApplication.PROTECTED_STRING + '\'' +
                 ", path='" + path + '\'' +
                 ", name='" + name + '\'' +
                 '}';

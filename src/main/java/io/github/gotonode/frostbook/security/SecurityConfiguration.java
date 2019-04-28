@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().sameOrigin();
 
         httpSecurity.authorizeRequests()
-                .antMatchers("/accounts", "/accounts/**").permitAll()
+                //.antMatchers("/accounts", "/accounts/**").permitAll()
                 .antMatchers("/h2-console", "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
                 .antMatchers(HttpMethod.GET, "/css", "/css/**").permitAll()

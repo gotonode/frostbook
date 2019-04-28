@@ -31,6 +31,9 @@ import org.springframework.context.annotation.ComponentScan;
         "io.github.gotonode.frostbook.form"})
 public class MyApplication {
 
+    public static final String APP_NAME = "Frostbook";
+    public static final String PROTECTED_STRING = "[PROTECTED]";
+
     public static final int MAX_GALLERY_IMAGES_PER_USER = 10;
 
     public static void main(String[] args) {
