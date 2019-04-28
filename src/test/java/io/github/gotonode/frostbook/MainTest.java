@@ -158,7 +158,7 @@ public class MainTest extends FluentTest {
         find("form#login").submit();
 
         // Check that the user was logged in.
-        assertTrue(pageSource().contains(profile.getHandle()));
+        assertTrue(pageSource().contains(profile.getPath()));
     }
 
     private Profile createRandomProfile(String plaintextPassword) {
