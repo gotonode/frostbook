@@ -158,7 +158,7 @@ public class MainTest extends FluentTest {
         find("form#login").submit();
 
         // Check that the user was logged in.
-        assertTrue(pageSource().contains(profile.getPath()));
+        assertTrue(pageSource().contains(profile.getHandle()));
     }
 
     private Profile createRandomProfile(String plaintextPassword) {
@@ -169,7 +169,7 @@ public class MainTest extends FluentTest {
         profile.setDate(Date.from(Instant.now()));
         profile.setHandle(UUID.randomUUID().toString().substring(0, 8));
         profile.setPath(UUID.randomUUID().toString().substring(0, 8));
-        profile.setName(UUID.randomUUID().toString().substring(0, 8) + " " +
+        profile.setName(UUID.randomUUID().toString().substring(0, 8) + ' ' +
                 UUID.randomUUID().toString().substring(0, 8));
         profile.setPassword(passwordEncoder.encode(plaintextPassword));
 
