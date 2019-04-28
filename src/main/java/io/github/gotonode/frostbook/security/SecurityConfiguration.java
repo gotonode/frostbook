@@ -28,9 +28,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        System.out.println("Configured security");
-
-        // TODO: Disable this for production!
         httpSecurity.csrf().disable();
 
         httpSecurity.headers().frameOptions().sameOrigin();
@@ -53,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/about").permitAll()
                 .antMatchers(HttpMethod.GET, "/help").permitAll()
                 .anyRequest().authenticated().and()
-                .formLogin().loginProcessingUrl("/login").loginPage("/login").usernameParameter("handle").passwordParameter("password").permitAll().and() //loginProcessingUrl("/login").defaultSuccessUrl("/id").failureUrl("/login?error").permitAll().and()
+                .formLogin().loginProcessingUrl("/login").loginPage("/login").usernameParameter("handle").passwordParameter("password").permitAll().and()
                 .logout().logoutSuccessUrl("/").permitAll();
     }
 

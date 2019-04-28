@@ -80,6 +80,18 @@ public class ProfileService {
 
         Profile profile = new Profile();
 
+        String name = registerData.getName().trim();
+
+        String singleSpace = " ";
+        String doubleSpace = singleSpace + singleSpace;
+
+        // Remove annoying double spaces from name. Handle and path cannot contain spaces at all.
+        while (name.contains(doubleSpace)) {
+            name = name.replace(doubleSpace, singleSpace);
+        }
+
+        registerData.setName(name);
+
         profile.setDate(Date.from(Instant.now()));
         profile.setHandle(registerData.getHandle().trim());
         profile.setName(registerData.getName().trim());
