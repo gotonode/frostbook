@@ -1,6 +1,8 @@
 # Frostbook
 *A social media app*
 
+[![Build Status](https://travis-ci.org/gotonode/frostbook.svg?branch=master)](https://travis-ci.org/gotonode/frostbook)
+
 Frostbook is hosted on Heroku at the following link:
 
 [https://frostbook.herokuapp.com/](https://frostbook.herokuapp.com/)
