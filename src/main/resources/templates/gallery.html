@@ -27,13 +27,13 @@
 
             <div th:if="${#lists.size(profile.images) == 0}">
                 <strong>No images yet!</strong>
-                <div th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
-                    <p>Start by uploading some today.</p>
-                </div>
-                <div th:if="${!#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
-                    <p>Why not encourage the user to upload some images by sending a comment to them?</p>
+<!--                <div th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">-->
+<!--                    <p>Start by uploading some today.</p>-->
+<!--                </div>-->
+<!--                <div th:if="${!#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">-->
+<!--                    <p>Why not encourage the user to upload some images by sending a comment to them?</p>-->
 
-                </div>
+<!--                </div>-->
 
             </div>
 
