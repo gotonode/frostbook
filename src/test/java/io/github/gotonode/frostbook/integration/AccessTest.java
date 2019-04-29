@@ -103,10 +103,9 @@ public class AccessTest extends FluentTest {
         // Submit the form, registering the profile and redirecting to it.
         find("form#register").submit();
 
-        // View all profiles again.
-        goTo("http://localhost:" + port + "/search");
+        // Check that the URL we got redirected to is the new user's profile.
+        assertTrue(url().contains(path));
 
-        // Our profile should exist now that it was created.
         assertTrue(pageSource().contains(handle));
     }
 
