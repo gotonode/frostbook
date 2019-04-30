@@ -135,7 +135,7 @@ public class DebugService {
         Comment commentFromUserFour = new Comment();
         commentFromUserFour.setFromProfile(profileUserFour);
         commentFromUserFour.setDate(Date.from(Instant.now()));
-        commentFromUserFour.setComment("I'm having a stroke and here's some random letters: "
+        commentFromUserFour.setComment("Here are some random letters: "
                 + UUID.randomUUID().toString());
 
         commentRepository.save(commentFromUserOne);

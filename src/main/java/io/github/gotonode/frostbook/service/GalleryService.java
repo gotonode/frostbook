@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ImageService {
+public class GalleryService {
 
     @Autowired
     private ImageRepository imageRepository;
@@ -68,7 +68,7 @@ public class ImageService {
     }
 
     @Transactional
-    public Image like(long id, String handle) {
+    public Image likeToggle(long id, String handle) {
 
         Image image = imageRepository.findById(id).orElse(null);
 
@@ -79,10 +79,10 @@ public class ImageService {
         Profile profile = profileRepository.findProfileByHandle(handle);
 
         if (image.getLikedBy().contains(profile)) {
-            return null;
+            image.getLikedBy().remove(profile);
+        } else {
+            image.getLikedBy().add(profile);
         }
-
-        image.getLikedBy().add(profile);
 
         imageRepository.save(image);
 

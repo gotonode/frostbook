@@ -7,7 +7,7 @@ import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import io.github.gotonode.frostbook.repository.SubcommentRepository;
 import io.github.gotonode.frostbook.service.CommentService;
-import io.github.gotonode.frostbook.service.ImageService;
+import io.github.gotonode.frostbook.service.GalleryService;
 import io.github.gotonode.frostbook.service.ProfileService;
 import io.github.gotonode.frostbook.service.RequestService;
 import org.fluentlenium.adapter.junit.FluentTest;
@@ -48,7 +48,7 @@ public class SearchIG extends FluentTest {
     private ProfileService profileService;
 
     @Autowired
-    private ImageService imageService;
+    private GalleryService galleryService;
 
     @Autowired
     private RequestService requestService;

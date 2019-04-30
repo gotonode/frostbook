@@ -30,7 +30,7 @@
         <tr th:each="request : ${requests}">
             <td><a th:href="@{/id/} + ${request.fromProfile.path}"><span th:text="${request.fromProfile.handle}"></span></a>
             </td>
-            <td th:text="${request.date}"></td>
+            <td th:text="${#dates.format(request.date, 'dd.MM.yyyy HH:mm:ss')}"></td>
             <td>
                 <form method="POST" th:action="@{/id/} + ${request.fromProfile.path} + '/requests/accept'">
                     <button type="submit" class="btn btn-outline-success w-100"><i class="far fa-handshake"></i> Accept

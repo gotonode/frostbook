@@ -49,9 +49,9 @@
 <div th:fragment="wall">
 
     <div class="form-inline">
-        <form th:action="@{/id/} + ${profile.path} + '/comments'" method="POST">
-            <input type="text" class="form-control" name="comment" />
-            <button type="submit" class="btn btn-outline-primary">Send comment</button>
+        <form th:action="@{/id/} + ${profile.path} + '/comments'" method="POST" id="post-comment">
+            <input type="text" class="form-control" name="comment" id="comment" required />
+            <button type="submit" class="btn btn-outline-primary">Post a new comment</button>
         </form>
     </div>
 
@@ -69,10 +69,17 @@
                                 <p th:text="${comment.comment}"></p>
                                 <small class="comment-handle">&ndash; <a
                                         th:href="@{/id/} + ${comment.fromProfile.path}"><span
-                                        th:text="${comment.fromProfile.handle}"></span></a></small>
+                                        th:text="${comment.fromProfile.handle}"></span></a>
+
+                                    <span sec:authorize="isAuthenticated()"
+                                          th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), comment.fromProfile.handle)}"
+                                          class="text-secondary"> (you)</span>
+
+                                </small>
                             </div>
                             <div class="col-6 text-right">
-                                <span class="comment-date" th:text="${comment.date}">comment.date</span>
+                                <span class="comment-date"
+                                      th:text="${#dates.format(comment.date, 'dd.MM.yyyy HH:mm:ss')}">comment.date</span>
                             </div>
                         </div>
 
@@ -88,22 +95,36 @@
 
                             </div>
                             <div class="col-6 text-right">
-                                <small class="comment-date" th:text="${subcomment.date}">subcomment.date
+                                <small class="comment-date"
+                                       th:text="${#dates.format(subcomment.date, 'dd.MM.yyyy HH:mm:ss')}">
+                                    subcomment.date
                                 </small>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-9">
                                 <small class="comment-handle">&ndash; <a
                                         th:href="@{/id/} + ${subcomment.fromProfile.path}"><span
-                                        th:text="${subcomment.fromProfile.handle}"></span></a></small>
-                            </div>
-                            <div class="col-6 text-right">
+                                        th:text="${subcomment.fromProfile.handle}"></span></a>
 
-                                <button type="button" onclick="alert('Not implemented yet.');"
-                                        class="btn btn-sm btn-outline-danger"><i
-                                        class="far fa-trash-alt"></i>
-                                </button>
+                                    <span sec:authorize="isAuthenticated()"
+                                          th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), subcomment.fromProfile.handle)}"
+                                          class="text-secondary"> (you)</span>
+
+                                </small>
+                            </div>
+                            <div sec:authorize="isAuthenticated()"
+                                 th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), subcomment.fromProfile.handle)} or ${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}"
+                                 class="col-3 text-right">
+
+                                <form th:action="@{/id/} + ${profile.path} + '/comments/' + ${comment.id} + '/subcomments/' + ${subcomment.id} + '/delete'"
+                                      method="POST">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+                                        <i class="far fa-trash-alt"></i><span
+                                            class="sr-only">Delete subcomment</span>
+                                    </button>
+                                </form>
 
                             </div>
                         </div>
@@ -115,27 +136,35 @@
                 <div class="card-footer">
 
                     <div class="row">
-                        <div class="col-9 input-group form-inline">
-                            <form class="mr-2">
-                                <button type="submit" class="btn btn-sm btn-outline-success"><i
-                                        class="far fa-heart"></i>
-                                    Like (1)
+                        <div class="col-10 input-group form-inline">
+                            <form th:action="@{/id/} + ${profile.path} + '/comments/' + ${comment.id} + '/like'"
+                                  method="POST">
+                                <button type="submit" class="btn btn-sm btn-outline-success mr-2">
+                                    <i class="far fa-heart"></i> Like <span th:if="${#lists.size(comment.likedBy)} > 0">(<span
+                                        th:text="${#lists.size(comment.likedBy)}"></span>)</span>
                                 </button>
                             </form>
                             <form th:action="@{/id/} + ${profile.path} + '/comments/' + ${comment.id} + '/subcomments'"
                                   method="POST">
-                                <input type="text" class="form-control form-control-sm" name="comment" />
-                                <button type="submit" class="btn btn-sm btn-outline-primary">Comment
+                                <input type="text" class="form-control form-control-sm" name="comment" required />
+                                <button type="submit" class="btn btn-sm btn-outline-primary ml-1">
+                                    Send
                                 </button>
                             </form>
                         </div>
-                        <div class="col-3 text-right">
-                            <button type="button" onclick="alert('Not implemented yet.');"
-                                    class="btn btn-sm btn-outline-danger"><i
-                                    class="far fa-trash-alt"></i>
-                                Delete
-                            </button>
+                        <div sec:authorize="isAuthenticated()"
+                             th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), comment.fromProfile.handle)} or ${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}"
+                             class="col-2 text-right">
+                            <form th:action="@{/id/} + ${profile.path} + '/comments/' + ${comment.id} + '/delete'"
+                                  method="POST">
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-danger">
+                                    <i class="far fa-trash-alt"></i><span class="sr-only">Delete comment</span>
+                                </button>
+                            </form>
+
                         </div>
+
                     </div>
 
                 </div>
@@ -144,8 +173,6 @@
     </div>
 
 </div>
-
-
 
 </body>
 

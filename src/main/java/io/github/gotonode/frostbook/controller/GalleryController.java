@@ -3,7 +3,7 @@ package io.github.gotonode.frostbook.controller;
 import io.github.gotonode.frostbook.MyApplication;
 import io.github.gotonode.frostbook.domain.Image;
 import io.github.gotonode.frostbook.domain.Profile;
-import io.github.gotonode.frostbook.service.ImageService;
+import io.github.gotonode.frostbook.service.GalleryService;
 import io.github.gotonode.frostbook.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +26,7 @@ public class GalleryController {
     private ProfileService profileService;
 
     @Autowired
-    private ImageService imageService;
+    private GalleryService galleryService;
 
     @GetMapping("/gallery")
     public String base(Authentication authentication) {
@@ -67,7 +67,7 @@ public class GalleryController {
             return "error";
         }
 
-        Image image = imageService.findById(id);
+        Image image = galleryService.findById(id);
 
         model.addAttribute("profile", profile);
         model.addAttribute("image", image);
@@ -78,7 +78,7 @@ public class GalleryController {
     @GetMapping("/id/{path}/gallery/{id}/content")
     public ResponseEntity<byte[]> image(@PathVariable Long id) {
 
-        Image image = imageService.findById(id);
+        Image image = galleryService.findById(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(image.getContentType()));
@@ -91,16 +91,15 @@ public class GalleryController {
     public String like(Model model, @PathVariable String path, @PathVariable Long id,
                        Authentication authentication, HttpServletRequest httpServletRequest) {
 
-        Image image = imageService.like(id, authentication.getName());
+        Image image = galleryService.likeToggle(id, authentication.getName());
 
         if (image == null) {
-            model.addAttribute("message",
-                    "Cannot like this image. Either you have already liked it or the image has been deleted.");
+            model.addAttribute("message", "This image has been deleted.");
             return "error";
 
         }
 
-        System.out.println("Liked image with ID: " + id);
+        System.out.println("Like (toggle) on image: " + image);
 
         String referer = httpServletRequest.getHeader("Referer");
 
@@ -131,7 +130,7 @@ public class GalleryController {
             return "error";
         }
 
-        Image image = imageService.create(file, description, authentication.getName());
+        Image image = galleryService.create(file, description, authentication.getName());
 
         if (image == null) {
             model.addAttribute("message", "You already have the maximum (" +

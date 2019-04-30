@@ -1,11 +1,9 @@
 package io.github.gotonode.frostbook.service;
 
 import io.github.gotonode.frostbook.domain.Comment;
-import io.github.gotonode.frostbook.domain.Image;
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.domain.Subcomment;
 import io.github.gotonode.frostbook.form.CommentData;
-import io.github.gotonode.frostbook.form.SubcommentData;
 import io.github.gotonode.frostbook.repository.CommentRepository;
 import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
@@ -28,9 +26,6 @@ public class CommentService {
 
     @Autowired
     private ProfileRepository profileRepository;
-
-    @Autowired
-    private ImageRepository imageRepository;
 
     @Transactional
     public Comment addComment(CommentData commentData, String handle, String path) {
@@ -55,7 +50,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Subcomment addSubcommentToComment(SubcommentData subcommentData, String handle, Long id) {
+    public Comment toggleLike(long id, String handle) {
 
         Comment comment = commentRepository.findById(id).orElse(null);
 
@@ -63,48 +58,58 @@ public class CommentService {
             return null;
         }
 
-        Subcomment subcomment = createSubcommentFromSubcommentData(subcommentData, handle);
+        Profile profile = profileRepository.findProfileByHandle(handle);
 
-        subcommentRepository.save(subcomment);
-
-        comment.getSubcomments().add(subcomment);
+        if (comment.getLikedBy().contains(profile)) {
+            comment.getLikedBy().remove(profile);
+        } else {
+            comment.getLikedBy().add(profile);
+        }
 
         commentRepository.save(comment);
 
-        return subcomment;
+        return comment;
     }
 
     @Transactional
-    public Subcomment addSubcommentToImage(SubcommentData subcommentData, String handle, Long id) {
+    public Comment remove(long id, String path, String handle) {
 
-        Image image = imageRepository.findById(id).orElse(null);
+        Profile targetProfile = profileRepository.findProfileByPath(path);
+        Profile myProfile = profileRepository.findProfileByHandle(handle);
 
-        if (image == null) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+
+        if (comment == null) {
             return null;
         }
 
-        Subcomment subcomment = createSubcommentFromSubcommentData(subcommentData, handle);
+        if (!targetProfile.getComments().contains(comment)) {
+            return null;
+        }
 
-        subcommentRepository.save(subcomment);
+        if (!myProfile.getPath().equals(path)) {
+            // This comment does not reside on our wall.
 
-        image.getSubcomments().add(subcomment);
+            if (!comment.getFromProfile().equals(myProfile)) {
+                // This comment is not made by us.
 
-        imageRepository.save(image);
+                return null;
+            }
+        }
 
-        return subcomment;
+        // Delete all subcomments from the comment before we actually delete the comment itself.
+        for (Subcomment subcomment : comment.getSubcomments()) {
+            subcommentRepository.delete(subcomment);
+        }
 
-    }
+        // Remove the comment from the profile's wall.
+        targetProfile.getComments().remove(comment);
 
-    private Subcomment createSubcommentFromSubcommentData(SubcommentData subcommentData, String handle) {
+        profileRepository.save(targetProfile);
 
-        Profile profile = profileRepository.findProfileByHandle(handle);
+        commentRepository.delete(comment);
 
-        Subcomment subcomment = new Subcomment();
+        return comment;
 
-        subcomment.setComment(subcommentData.getComment());
-        subcomment.setDate(Date.from(Instant.now()));
-        subcomment.setFromProfile(profile);
-
-        return subcomment;
     }
 }

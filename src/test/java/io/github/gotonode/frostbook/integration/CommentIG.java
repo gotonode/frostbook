@@ -27,14 +27,13 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @ComponentScan(value = "io.github.gotonode.frostbook")
-public class AccessTest extends FluentTest {
+public class CommentIG extends FluentTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -73,40 +72,9 @@ public class AccessTest extends FluentTest {
     private _Generic _generic;
 
     @Test
-    public void newUserCanRegister() {
+    public void userCanCommentOnOwnProfile() {
 
-        String handle = UUID.randomUUID().toString().substring(0, 8);
-        String path = UUID.randomUUID().toString().substring(0, 8);
-        String name = UUID.randomUUID().toString().substring(0, 8) + " "
-                + UUID.randomUUID().toString().substring(0, 8);
-        String password = UUID.randomUUID().toString().substring(0, 32);
-
-        // View all profiles.
-        goTo("http://localhost:" + port + "/search");
-
-        // Our profile should not exist.
-        assertFalse(pageSource().contains(handle));
-
-        // Start registering process.
-        goTo("http://localhost:" + port + "/register");
-
-        // Fill the form with the random data from above.
-        find("#handle").fill().with(handle);
-        find("#path").fill().with(path);
-        find("#name").fill().with(name);
-        find("#password").fill().with(password);
-
-        // Submit the form, registering the profile and redirecting to it.
-        find("form#register").submit();
-
-        // Check that the URL we got redirected to is the new user's profile.
-        assertTrue(url().contains(path));
-
-        assertTrue(pageSource().contains(handle));
-    }
-
-    @Test
-    public void existingUserCanLogin() {
+        String randomComment = UUID.randomUUID().toString();
 
         String plaintextPassword = UUID.randomUUID().toString().substring(0, 32);
 
@@ -114,11 +82,26 @@ public class AccessTest extends FluentTest {
 
         profileRepository.save(profile);
 
-        // View the index.
-        goTo("http://localhost:" + port);
+        login(profile, plaintextPassword);
 
-        // Our profile should not be logged in.
-        assertFalse(pageSource().contains(profile.getHandle()));
+        goTo("http://localhost:" + port + "/id/" + profile.getPath());
+
+        assertTrue(pageSource().contains(profile.getHandle()));
+
+        // Ensure that the profile's wall does not already contain the random comment.
+        assertFalse(pageSource().contains(randomComment));
+
+        find("#comment").fill().with(randomComment);
+
+        find("form#post-comment").submit();
+
+        System.out.println(pageSource());
+
+        // Check that the user's wall contains the random comment now.
+        assertTrue(pageSource().contains(randomComment));
+    }
+
+    private void login(Profile profile, String plaintextPassword) {
 
         // Load the login page.
         goTo("http://localhost:" + port + "/login");
@@ -129,9 +112,6 @@ public class AccessTest extends FluentTest {
 
         // Submit the form, logging in the user and redirecting to index.
         find("form#login").submit();
-
-        // Check that the user was logged in.
-        assertTrue(pageSource().contains(profile.getHandle()));
     }
 
 }
