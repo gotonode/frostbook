@@ -10,6 +10,7 @@ import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import io.github.gotonode.frostbook.repository.SubcommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,7 +33,7 @@ public class SubcommentService {
     private ImageRepository imageRepository;
 
     @Transactional
-    public Subcomment addToComment(SubcommentData subcommentData, String handle, Long id) {
+    public Subcomment addToComment(SubcommentData subcommentData, Authentication authentication, Long id) {
 
         Comment comment = commentRepository.findById(id).orElse(null);
 
@@ -40,7 +41,7 @@ public class SubcommentService {
             return null;
         }
 
-        Subcomment subcomment = createSubcommentFromSubcommentData(subcommentData, handle);
+        Subcomment subcomment = createSubcommentFromSubcommentData(subcommentData, authentication.getName());
 
         subcommentRepository.save(subcomment);
 
@@ -52,7 +53,7 @@ public class SubcommentService {
     }
 
     @Transactional
-    public Subcomment addToImage(SubcommentData subcommentData, String handle, Long id) {
+    public Subcomment addToImage(SubcommentData subcommentData, Authentication authentication, Long id) {
 
         Image image = imageRepository.findById(id).orElse(null);
 
@@ -60,7 +61,7 @@ public class SubcommentService {
             return null;
         }
 
-        Subcomment subcomment = createSubcommentFromSubcommentData(subcommentData, handle);
+        Subcomment subcomment = createSubcommentFromSubcommentData(subcommentData, authentication.getName());
 
         subcommentRepository.save(subcomment);
 
@@ -73,9 +74,9 @@ public class SubcommentService {
     }
 
     @Transactional
-    public Subcomment remove(long commentId, long subcommentId, String path, String handle) {
+    public Subcomment remove(long commentId, long subcommentId, String path, Authentication authentication) {
 
-        Profile myProfile = profileRepository.findProfileByHandle(handle);
+        Profile myProfile = profileRepository.findProfileByHandle(authentication.getName());
 
         Comment comment = commentRepository.findById(commentId).orElse(null);
         Subcomment subcomment = subcommentRepository.findById(subcommentId).orElse(null);

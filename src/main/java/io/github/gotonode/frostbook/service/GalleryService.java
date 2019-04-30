@@ -6,6 +6,7 @@ import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,9 +38,9 @@ public class GalleryService {
     }
 
     @Transactional
-    public Image create(MultipartFile file, String description, String handle) throws IOException {
+    public Image create(MultipartFile file, String description, Authentication authentication) throws IOException {
 
-        Profile profile = profileRepository.findProfileByHandle(handle);
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
 
         if (profile.getImages().size() >= MyApplication.MAX_GALLERY_IMAGES_PER_USER) {
             return null;
@@ -68,7 +69,7 @@ public class GalleryService {
     }
 
     @Transactional
-    public Image likeToggle(long id, String handle) {
+    public Image likeToggle(long id, Authentication authentication) {
 
         Image image = imageRepository.findById(id).orElse(null);
 
@@ -76,7 +77,7 @@ public class GalleryService {
             return null;
         }
 
-        Profile profile = profileRepository.findProfileByHandle(handle);
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
 
         if (image.getLikedBy().contains(profile)) {
             image.getLikedBy().remove(profile);

@@ -32,9 +32,9 @@ public class RequestService {
     }
 
     @Transactional
-    public void befriend(Profile targetProfile, String handle) {
+    public void befriend(Profile targetProfile, Authentication authentication) {
 
-        Profile currentProfile = profileRepository.findProfileByHandle(handle);
+        Profile currentProfile = profileRepository.findProfileByHandle(authentication.getName());
 
         Request request = new Request();
         request.setDate(Date.from(Instant.now()));
@@ -48,9 +48,9 @@ public class RequestService {
     }
 
     @Transactional
-    public void unfriend(Profile targetProfile, String handle) {
+    public void unfriend(Profile targetProfile, Authentication authentication) {
 
-        Profile currentProfile = profileRepository.findProfileByHandle(handle);
+        Profile currentProfile = profileRepository.findProfileByHandle(authentication.getName());
 
         targetProfile.getFriends().remove(currentProfile);
         currentProfile.getFriends().remove(targetProfile);

@@ -5,10 +5,10 @@ import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.domain.Subcomment;
 import io.github.gotonode.frostbook.form.CommentData;
 import io.github.gotonode.frostbook.repository.CommentRepository;
-import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import io.github.gotonode.frostbook.repository.SubcommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,9 +28,9 @@ public class CommentService {
     private ProfileRepository profileRepository;
 
     @Transactional
-    public Comment addComment(CommentData commentData, String handle, String path) {
+    public Comment addComment(CommentData commentData, Authentication authentication, String path) {
 
-        Profile fromProfile = profileRepository.findProfileByHandle(handle);
+        Profile fromProfile = profileRepository.findProfileByHandle(authentication.getName());
 
         Comment comment = new Comment();
 
@@ -50,7 +50,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment toggleLike(long id, String handle) {
+    public Comment toggleLike(long id, Authentication authentication) {
 
         Comment comment = commentRepository.findById(id).orElse(null);
 
@@ -58,7 +58,7 @@ public class CommentService {
             return null;
         }
 
-        Profile profile = profileRepository.findProfileByHandle(handle);
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
 
         if (comment.getLikedBy().contains(profile)) {
             comment.getLikedBy().remove(profile);
@@ -72,10 +72,10 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment remove(long id, String path, String handle) {
+    public Comment remove(long id, String path, Authentication authentication) {
 
         Profile targetProfile = profileRepository.findProfileByPath(path);
-        Profile myProfile = profileRepository.findProfileByHandle(handle);
+        Profile myProfile = profileRepository.findProfileByHandle(authentication.getName());
 
         Comment comment = commentRepository.findById(id).orElse(null);
 

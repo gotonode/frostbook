@@ -53,7 +53,7 @@ public class DebugController {
             return "error";
         }
 
-        debugService.makePopular(authentication.getName());
+        debugService.makePopular(authentication);
 
         return "redirect:/friends";
     }

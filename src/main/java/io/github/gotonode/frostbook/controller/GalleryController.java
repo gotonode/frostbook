@@ -91,7 +91,7 @@ public class GalleryController {
     public String like(Model model, @PathVariable String path, @PathVariable Long id,
                        Authentication authentication, HttpServletRequest httpServletRequest) {
 
-        Image image = galleryService.likeToggle(id, authentication.getName());
+        Image image = galleryService.likeToggle(id, authentication);
 
         if (image == null) {
             model.addAttribute("message", "This image has been deleted.");
@@ -130,7 +130,7 @@ public class GalleryController {
             return "error";
         }
 
-        Image image = galleryService.create(file, description, authentication.getName());
+        Image image = galleryService.create(file, description, authentication);
 
         if (image == null) {
             model.addAttribute("message", "You already have the maximum (" +

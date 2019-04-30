@@ -29,7 +29,7 @@ public class CommentController {
 
         System.out.println("Posting a new comment: " + commentData);
 
-        Comment comment = commentService.addComment(commentData, authentication.getName(), path);
+        Comment comment = commentService.addComment(commentData, authentication, path);
 
         System.out.println("Posted a new comment to the wall: " + comment);
 
@@ -40,7 +40,7 @@ public class CommentController {
     public String like(@PathVariable String path, @PathVariable Long id,
                        Authentication authentication, Model model) {
 
-        Comment comment = commentService.toggleLike(id, authentication.getName());
+        Comment comment = commentService.toggleLike(id, authentication);
 
         if (comment == null) {
             model.addAttribute("message", "This comment has been deleted.");
@@ -56,7 +56,7 @@ public class CommentController {
     public String deleteComment(@PathVariable String path, @PathVariable Long id,
                                 Authentication authentication, Model model) {
 
-        Comment comment = commentService.remove(id, path, authentication.getName());
+        Comment comment = commentService.remove(id, path, authentication);
 
         if (comment == null) {
             model.addAttribute("message", "Cannot delete this comment. Perhaps you're not the owner of it.");
@@ -72,7 +72,7 @@ public class CommentController {
     public String deleteSubcomment(@PathVariable String path, @PathVariable Long commentId,
                                    @PathVariable Long subcommentId, Authentication authentication, Model model) {
 
-        Subcomment subcomment = subcommentService.remove(commentId, subcommentId, path, authentication.getName());
+        Subcomment subcomment = subcommentService.remove(commentId, subcommentId, path, authentication);
 
         if (subcomment == null) {
             model.addAttribute("message", "Cannot delete this subcomment. Perhaps you're not the owner of it.");
@@ -92,7 +92,7 @@ public class CommentController {
         System.out.println("Posting a new subcomment (wall): " + subcommentData);
 
         Subcomment subcomment = subcommentService.addToComment(subcommentData,
-                authentication.getName(), id);
+                authentication, id);
 
         if (subcomment == null) {
             System.out.println("Could not add comment.");
@@ -111,7 +111,7 @@ public class CommentController {
         System.out.println("Posting a new subcomment (image): " + subcommentData);
 
         Subcomment subcomment = subcommentService.addToImage(subcommentData,
-                authentication.getName(), id);
+                authentication, id);
 
         if (subcomment == null) {
             System.out.println("Could not add comment.");

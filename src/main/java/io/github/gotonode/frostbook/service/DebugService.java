@@ -150,9 +150,9 @@ public class DebugService {
     }
 
     @Transactional
-    public void makePopular(String handle) {
+    public void makePopular(Authentication authentication) {
 
-        Profile profile = profileService.findByHandle(handle);
+        Profile profile = profileService.findByHandle(authentication.getName());
 
         for (int i = 0; i < 5; i++) {
 

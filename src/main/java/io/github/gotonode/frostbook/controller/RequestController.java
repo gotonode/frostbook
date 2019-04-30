@@ -28,7 +28,7 @@ public class RequestController {
         if (authentication == null) {
             return "redirect:/login";
         } else {
-            Profile profile = profileService.findByHandle(authentication.getName());
+            Profile profile = profileService.findByAuthentication(authentication);
             return "redirect:/id/" + profile.getPath() + "/requests";
         }
     }

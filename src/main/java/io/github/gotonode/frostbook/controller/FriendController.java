@@ -29,7 +29,7 @@ public class FriendController {
         if (authentication == null) {
             return "redirect:/login";
         } else {
-            Profile profile = profileService.findByHandle(authentication.getName());
+            Profile profile = profileService.findByAuthentication(authentication);
             return "redirect:/id/" + profile.getPath() + "/friends";
         }
     }
@@ -76,7 +76,7 @@ public class FriendController {
             }
         }
 
-        requestService.befriend(targetProfile, authentication.getName());
+        requestService.befriend(targetProfile, authentication);
 
         return "redirect:/id/" + targetProfile.getPath();
     }
@@ -92,7 +92,7 @@ public class FriendController {
             return "error";
         }
 
-        requestService.unfriend(targetProfile, authentication.getName());
+        requestService.unfriend(targetProfile, authentication);
 
         return "redirect:/friends";
     }
