@@ -28,7 +28,8 @@ import org.springframework.context.annotation.ComponentScan;
         "io.github.gotonode.frostbook.security",
         "io.github.gotonode.frostbook.domain",
         "io.github.gotonode.frostbook.service",
-        "io.github.gotonode.frostbook.form"})
+        "io.github.gotonode.frostbook.form",
+        "io.github.gotonode.frostbook.details"})
 public class MyApplication {
 
     public static final String APP_NAME = "Frostbook";
