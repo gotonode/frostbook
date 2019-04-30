@@ -128,10 +128,6 @@ public class ProfileService {
         return profileRepository.findProfileByHandle(handle);
     }
 
-    public String getPath(Authentication authentication) {
-        return profileRepository.findProfileByHandle(authentication.getName()).getPath();
-    }
-
     public Profile findByAuthentication(Authentication authentication) {
         return profileRepository.findProfileByHandle(authentication.getName());
     }

@@ -34,8 +34,8 @@ public class GalleryController {
         if (authentication == null) {
             return "redirect:/login";
         } else {
-            String path = profileService.getPath(authentication);
-            return "redirect:/id/" + path + "/gallery";
+            Profile profile = profileService.findByAuthentication(authentication);
+            return "redirect:/id/" + profile.getPath() + "/gallery";
         }
     }
 

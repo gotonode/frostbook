@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @Controller
 public class ProfileController {
 
@@ -22,8 +21,8 @@ public class ProfileController {
         if (authentication == null) {
             return "redirect:/login";
         } else {
-            String path = profileService.getPath(authentication);
-            return "redirect:/id/" + path;
+            Profile profile = profileService.findByAuthentication(authentication);
+            return "redirect:/id/" + profile.getPath();
         }
     }
 
