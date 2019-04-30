@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.service;
 
+import io.github.gotonode.frostbook.details.CustomUserDetailsService;
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.domain.Request;
 import io.github.gotonode.frostbook.form.RegisterData;
@@ -10,9 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

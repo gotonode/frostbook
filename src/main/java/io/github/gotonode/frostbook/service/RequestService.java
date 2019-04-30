@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.service;
 
+import io.github.gotonode.frostbook.details.CustomUserDetailsService;
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.domain.Request;
 import io.github.gotonode.frostbook.repository.ProfileRepository;

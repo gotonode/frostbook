@@ -1,4 +1,4 @@
-package io.github.gotonode.frostbook.service;
+package io.github.gotonode.frostbook.details;
 
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             simpleGrantedAuthorities.add(new SimpleGrantedAuthority((authority)));
         }
 
-        User user = new User(
+        return new User(
                 profile.getHandle(),
                 profile.getPassword(),
                 true,
@@ -45,10 +45,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true,
                 true,
                 simpleGrantedAuthorities);
-
-        System.out.println("User login details: " + user);
-
-        return user;
     }
 
     public Profile getProfile() {
