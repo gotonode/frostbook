@@ -14,6 +14,10 @@
         <div class="card-header text-center">
 
             <strong th:text="${profile.handle}" class="card-title "></strong>
+            <small sec:authorize="isAuthenticated()"
+                   th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}"
+                   class="text-secondary"> (you)
+            </small>
         </div>
         <img class="card-img-top" src="/img/sample01.png" alt="Card image cap">
 
