@@ -18,15 +18,26 @@
                          th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}"
                          alt="${image.description}}">
                 </a>
-                <div sec:authorize="isAuthenticated()"
-                     th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
-                    <div class="card-footer text-right">
+
+                <div class="card-footer">
+                    <div class="row">
+                    <div class="col-8">
+                        <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'" method="POST">
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i
+                                    class="far fa-heart"></i>
+                                Like <span th:if="${#lists.size(image.likedBy)} > 0">(<span
+                                        th:text="${#lists.size(image.likedBy)}"></span>)</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-4 text-right" sec:authorize="isAuthenticated()"
+                         th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
                         <form method="POST" action="">
                             <button type="button" onclick="alert('Not implemented yet.');"
                                     class="btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </div>
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,49 +45,48 @@
     </div>
 </div>
 
-    <div th:fragment="upload">
-        <form method="POST" th:action="@{/id/} + ${profile.path} + '/gallery'" enctype="multipart/form-data">
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" name="file" id="file" class="custom-control-input" />
-                    <label for="file" class="custom-file-label">Choose your image</label>
-                </div>
+<div th:fragment="upload">
+    <form method="POST" th:action="@{/id/} + ${profile.path} + '/gallery'" enctype="multipart/form-data">
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" name="file" id="file" class="custom-control-input" />
+                <label for="file" class="custom-file-label">Choose your image</label>
             </div>
-            <div class="input-group">
+        </div>
+        <div class="input-group">
 
-                <input type="text" name="description" id="description" class="form-control" placeholder="Description" />
+            <input type="text" name="description" id="description" class="form-control" placeholder="Description" />
 
-            </div>
-            <div class="input-group">
-                <button type="submit" class="btn btn-outline-primary" th:classappend="${#lists.size(profile.images) >= 10} ? 'btn-disabled'">
-                    <i class="fas fa-file-upload"></i> Upload image
-                </button>
-            </div>
-        </form>
-
-        <script defer>
-            $(".custom-file-input").on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            });
-        </script>
-    </div>
-
-    <div th:fragment="image(profile, image)">
-        <img th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}"
-             alt="${image.description}}">
-        <hr />
-
-
-
-        <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'" method="POST">
-            <button type="submit" class="btn btn-sm btn-outline-success"><i
-                    class="far fa-heart"></i>
-                Like <span th:if="${#lists.size(image.likedBy)} > 0">(<span th:text="${#lists.size(image.likedBy)}"></span>)</span>
+        </div>
+        <div class="input-group">
+            <button type="submit" class="btn btn-outline-primary"
+                    th:classappend="${#lists.size(profile.images) >= 10} ? 'btn-disabled'">
+                <i class="fas fa-file-upload"></i> Upload image
             </button>
-        </form>
+        </div>
+    </form>
 
-    </div>
+    <script defer>
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+</div>
+
+<div th:fragment="image(profile, image)">
+    <img th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}"
+         alt="${image.description}}">
+    <hr />
+
+    <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'" method="POST">
+        <button type="submit" class="btn btn-sm btn-outline-success"><i
+                class="far fa-heart"></i>
+            Like <span th:if="${#lists.size(image.likedBy)} > 0">(<span th:text="${#lists.size(image.likedBy)}"></span>)</span>
+        </button>
+    </form>
+
+</div>
 
 </body>
 
