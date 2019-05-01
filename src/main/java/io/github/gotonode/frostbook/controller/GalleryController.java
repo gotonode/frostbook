@@ -75,6 +75,24 @@ public class GalleryController {
         return "image";
     }
 
+    @PostMapping("/id/{path}/gallery/{id}/delete")
+    public String deleteImage(@PathVariable String path, Model model,
+                              @PathVariable Long id, Authentication authentication) {
+
+        Profile profile = profileService.findByPath(path);
+
+        if (profile == null) {
+            model.addAttribute("message", "No profile was found who owns that gallery image path. Please try the search functionality.");
+            return "error";
+        }
+
+        Image image = galleryService.remove(id, authentication);
+
+        System.out.println("Removed image with ID: " + image.getId());
+
+        return "redirect:/gallery";
+    }
+
     @GetMapping("/id/{path}/gallery/{id}/content")
     public ResponseEntity<byte[]> image(@PathVariable Long id) {
 

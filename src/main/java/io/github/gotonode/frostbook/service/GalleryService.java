@@ -89,4 +89,27 @@ public class GalleryService {
 
         return image;
     }
+
+    @Transactional
+    public Image remove(long id, Authentication authentication) {
+
+        Image image = imageRepository.findById(id).orElse(null);
+
+        if (image == null) {
+            return null;
+        }
+
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+
+        if (profile.getImages().contains(image)) {
+            // We own this image. Now we can delete it.
+
+            profile.getImages().remove(image);
+
+            imageRepository.delete(image);
+        }
+
+        return image;
+
+    }
 }
