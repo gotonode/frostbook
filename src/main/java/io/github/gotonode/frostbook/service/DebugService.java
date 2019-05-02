@@ -127,24 +127,16 @@ public class DebugService {
         commentFromUserOne.setDate(Date.from(Instant.now()));
         commentFromUserOne.setComment("Can you help me with something?");
 
-        Comment commentFromUserThree = new Comment();
-        commentFromUserThree.setFromProfile(profileUserThree);
-        commentFromUserThree.setDate(Date.from(Instant.now()));
-        commentFromUserThree.setComment("I want to be friends with the admin! I sent you a friend request.");
-
-        Comment commentFromUserFour = new Comment();
-        commentFromUserFour.setFromProfile(profileUserFour);
-        commentFromUserFour.setDate(Date.from(Instant.now()));
-        commentFromUserFour.setComment("Here are some random letters: "
-                + UUID.randomUUID().toString());
+        Comment commentFromUserTwo = new Comment();
+        commentFromUserTwo.setFromProfile(profileUserFour);
+        commentFromUserTwo.setDate(Date.from(Instant.now()));
+        commentFromUserTwo.setComment("Frostbook rules!");
 
         commentRepository.save(commentFromUserOne);
-        commentRepository.save(commentFromUserThree);
-        commentRepository.save(commentFromUserFour);
+        commentRepository.save(commentFromUserTwo);
 
         profileAdmin.getComments().add(commentFromUserOne);
-        profileAdmin.getComments().add(commentFromUserThree);
-        profileAdmin.getComments().add(commentFromUserFour);
+        profileAdmin.getComments().add(commentFromUserTwo);
 
         profileRepository.save(profileAdmin);
     }
