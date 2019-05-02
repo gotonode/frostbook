@@ -117,4 +117,40 @@ public class SubcommentService {
 
         return subcomment;
     }
+
+    public Subcomment removeFromImage(long imageId, long subcommentId, String path, Authentication authentication) {
+
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+
+        Image image = imageRepository.findById(imageId).orElse(null);
+
+        Subcomment subcomment = subcommentRepository.findById(subcommentId).orElse(null);
+
+        if (image == null || subcomment == null) {
+            return null;
+        }
+
+        if (!image.getSubcomments().contains(subcomment)) {
+            // This subcomment doesn't belong to this image.
+            return null;
+        }
+
+        if (!profile.getPath().equals(path)) {
+            // This subcomment does not reside on our wall.
+
+            if (!subcomment.getFromProfile().equals(profile)) {
+                // This subcomment is not made by us.
+
+                return null;
+            }
+        }
+
+        image.getSubcomments().remove(subcomment);
+
+        imageRepository.save(image);
+
+        subcommentRepository.delete(subcomment);
+
+        return subcomment;
+    }
 }

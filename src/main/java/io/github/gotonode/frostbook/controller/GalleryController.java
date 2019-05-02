@@ -109,6 +109,11 @@ public class GalleryController {
     public String like(Model model, @PathVariable String path, @PathVariable Long id,
                        Authentication authentication, HttpServletRequest httpServletRequest) {
 
+        if (!profileService.isFriendsWith(path, authentication)) {
+            model.addAttribute("message", "You're not friends with them and cannot like this image.");
+            return "error";
+        }
+
         Image image = galleryService.likeToggle(id, authentication);
 
         if (image == null) {

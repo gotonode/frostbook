@@ -64,7 +64,6 @@ public class ProfileService {
         toProfile.getRequests().add(request);
     }
 
-
     public List<Profile> find(String query) {
         return profileRepository.findAllByHandleContainingOrNameContainingOrPathContainingOrderByIdAsc(query, query, query);
     }
@@ -112,6 +111,7 @@ public class ProfileService {
 
     /**
      * Automatically logs the specified user in.
+     *
      * @param profile The user to log in.
      */
     public void login(Profile profile) {
@@ -151,5 +151,24 @@ public class ProfileService {
         profile.setProfileImage(image);
 
         return profileRepository.save(profile);
+    }
+
+    public boolean isFriendsWith(Profile profile, Authentication authentication) {
+
+        Profile myProfile = profileRepository.findProfileByHandle(authentication.getName());
+
+        if (myProfile.equals(profile)) {
+            // You're always friends with yourself. :-)
+            return true;
+        }
+
+        return myProfile.getFriends().contains(profile);
+    }
+
+    public boolean isFriendsWith(String path, Authentication authentication) {
+
+        Profile targetProfile = profileRepository.findProfileByPath(path);
+
+        return isFriendsWith(targetProfile, authentication);
     }
 }

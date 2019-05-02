@@ -44,14 +44,14 @@
                                     <form method="POST"
                                           th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/delete'"
                                           class="dropdown-item">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <button type="submit" class="btn btn-link">
                                             <i class="far fa-fw fa-trash-alt"></i> Delete
                                         </button>
                                     </form>
                                     <form method="POST"
                                           th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/set'"
                                           class="dropdown-item">
-                                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <button type="submit" class="btn btn-link">
                                             <i class="far fa-fw fa-image"></i> Set as profile image
                                         </button>
                                     </form>
@@ -71,13 +71,14 @@
     <form method="POST" th:action="@{/id/} + ${profile.path} + '/gallery'" enctype="multipart/form-data">
         <div class="input-group">
             <div class="custom-file">
-                <input type="file" name="file" id="file" class="custom-control-input" />
+                <input type="file" name="file" id="file" class="custom-control-input" required />
                 <label for="file" class="custom-file-label">Choose your image</label>
             </div>
         </div>
         <div class="input-group">
 
-            <input type="text" name="description" id="description" class="form-control" placeholder="Description" />
+            <input type="text" name="description" id="description" class="form-control" placeholder="Description"
+                   required />
 
         </div>
         <div class="input-group">
@@ -88,8 +89,8 @@
         </div>
     </form>
 
-    <script defer>
-        $(".custom-file-input").on("change", function () {
+    <script>
+        $(".custom-control-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
@@ -97,16 +98,94 @@
 </div>
 
 <div th:fragment="image(profile, image)">
+
+    <div class="row">
+        <div class="col-6">
+            <em><p th:text="${image.description}"></p></em>
+        </div>
+        <div class="col-6 text-right">
+            <p th:text="${image.date}"></p>
+        </div>
+    </div>
+
     <img th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${image.id})}"
-         alt="${image.description}}">
+         alt="${image.description}" class="w-100">
     <hr />
 
-    <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'" method="POST">
-        <button type="submit" class="btn btn-sm btn-outline-success"><i
-                class="far fa-heart"></i>
-            Like <span th:if="${#lists.size(image.likedBy)} > 0">(<span th:text="${#lists.size(image.likedBy)}"></span>)</span>
-        </button>
-    </form>
+    <div class="row">
+
+        <div class="col-6 form-inline">
+            <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/subcomments'" method="POST">
+                <input type="text" class="form-control" name="comment" id="comment" required />
+                <button type="submit" class="btn btn-outline-primary">Post</button>
+            </form>
+        </div>
+        <div class="col-6 text-right">
+            <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'"
+                  method="POST">
+                <button type="submit" class="btn btn-outline-success"><i
+                        class="far fa-heart"></i>
+                    Like <span th:if="${#lists.size(image.likedBy)} > 0">(<span
+                            th:text="${#lists.size(image.likedBy)}"></span>)</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="card-deck">
+        <div class="col-12 card-row" th:each="subcomment : ${image.subcomments}">
+            <div class="card bg-light m-0">
+
+                <div class="card-body">
+
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col-6">
+                                <p th:text="${subcomment.comment}"></p>
+                                <small class="comment-handle">&ndash; <a
+                                        th:href="@{/id/} + ${subcomment.fromProfile.path}"><span
+                                        th:text="${subcomment.fromProfile.handle}"></span></a>
+
+                                    <span sec:authorize="isAuthenticated()"
+                                          th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), subcomment.fromProfile.handle)}"
+                                          class="text-secondary"> (you)</span>
+
+                                </small>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span class="comment-date"
+                                      th:text="${#dates.format(subcomment.date, 'dd.MM.yyyy HH:mm:ss')}">subcomment.date</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer" sec:authorize="isAuthenticated()"
+                     th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), subcomment.fromProfile.handle)} or ${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
+
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/subcomments/' + ${subcomment.id} + '/delete'"
+                                  method="POST">
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-danger">
+                                    <i class="far fa-trash-alt"></i><span class="sr-only">Delete comment</span>
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 public class Comment extends AbstractPersistable<Long> {
 
     //@Column(name = "from_user", nullable = false)
