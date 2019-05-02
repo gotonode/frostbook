@@ -18,7 +18,8 @@
                    th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}"
                    class="text-secondary"> (you)</small>
         </div>
-        <img class="card-img-top" src="/img/sample01.png" alt="Card image cap">
+        <img th:if="${profile.profileImage}" class="card-img-top" th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${profile.profileImage.id})}" alt="Card image cap">
+        <img th:if="${profile.profileImage} == null" class="card-img-top" src="/img/sample01.png" alt="Card image cap">
 
         <div class="card-body">
 

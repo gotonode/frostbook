@@ -128,6 +128,23 @@ public class GalleryController {
         return "redirect:" + referer;
     }
 
+    @PostMapping("/id/{path}/gallery/{id}/set")
+    public String set(Model model, @PathVariable String path, @PathVariable Long id,
+                      Authentication authentication, HttpServletRequest httpServletRequest) {
+
+        Profile profile = profileService.setAsProfileImage(id, authentication);
+
+        if (profile == null) {
+            model.addAttribute("message", "Could not set this as profile image. Perhaps you don't own it?");
+            return "error";
+        }
+
+        System.out.println("Set a new profile image for: " + profile);
+
+        return "redirect:/id/" + path + "/gallery/";
+
+    }
+
     @PostMapping("/id/{path}/gallery")
     public String upload(Model model, @RequestParam MultipartFile file, @RequestParam String description,
                          Authentication authentication, @PathVariable String path) throws IOException {

@@ -1,9 +1,11 @@
 package io.github.gotonode.frostbook.service;
 
 import io.github.gotonode.frostbook.details.CustomUserDetailsService;
+import io.github.gotonode.frostbook.domain.Image;
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.domain.Request;
 import io.github.gotonode.frostbook.form.RegisterData;
+import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
 import io.github.gotonode.frostbook.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class ProfileService {
     private ProfileRepository profileRepository;
 
     @Autowired
-    private RequestRepository requestRepository;
+    private ImageRepository imageRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -129,5 +131,25 @@ public class ProfileService {
 
     public Profile findByAuthentication(Authentication authentication) {
         return profileRepository.findProfileByHandle(authentication.getName());
+    }
+
+    public Profile setAsProfileImage(long id, Authentication authentication) {
+
+        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+
+        Image image = imageRepository.findById(id).orElse(null);
+
+        // We don't own this image, so we cannot set it as our profile image.
+        if (!profile.getImages().contains(image)) {
+            return null;
+        }
+
+        if (image == null) {
+            return null;
+        }
+
+        profile.setProfileImage(image);
+
+        return profileRepository.save(profile);
     }
 }

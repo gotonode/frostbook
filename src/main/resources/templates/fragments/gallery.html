@@ -21,7 +21,7 @@
 
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-6">
                             <form th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/like'"
                                   method="POST">
                                 <button type="submit" class="btn btn-sm btn-outline-success"><i
@@ -31,13 +31,33 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-4 text-right" sec:authorize="isAuthenticated()"
+                        <div class="col-6 text-right" sec:authorize="isAuthenticated()"
                              th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}">
-                            <form method="POST" th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/delete'">
-                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                    <i class="far fa-trash-alt"></i>
+
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                    Tools
                                 </button>
-                            </form>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form method="POST"
+                                          th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/delete'"
+                                          class="dropdown-item">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="far fa-fw fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                    <form method="POST"
+                                          th:action="@{/id/} + ${profile.path} + '/gallery/' + ${image.id} + '/set'"
+                                          class="dropdown-item">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                                            <i class="far fa-fw fa-image"></i> Set as profile image
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

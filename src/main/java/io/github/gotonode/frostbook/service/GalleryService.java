@@ -101,8 +101,15 @@ public class GalleryService {
 
         Profile profile = profileRepository.findProfileByHandle(authentication.getName());
 
+        // We own this image. Now we can delete it.
         if (profile.getImages().contains(image)) {
-            // We own this image. Now we can delete it.
+
+            // Set profile image to null if we're deleting the current profile image.
+            if (profile.getProfileImage() == image) {
+                profile.setProfileImage(null);
+            }
+
+            profileRepository.save(profile);
 
             profile.getImages().remove(image);
 
