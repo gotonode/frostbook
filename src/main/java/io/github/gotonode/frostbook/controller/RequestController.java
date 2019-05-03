@@ -38,7 +38,10 @@ public class RequestController {
 
         List<Request> requests = requestService.getRequests();
 
+        List<Request> sentRequests = requestService.getSentRequests();
+
         model.addAttribute("requests", requests);
+        model.addAttribute("sentRequests", sentRequests);
         return "requests";
     }
 

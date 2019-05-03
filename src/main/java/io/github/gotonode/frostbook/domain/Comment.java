@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedQuery(name = "Comment.findAll", query="select c from Comment c order by c.date asc")
 public class Comment extends AbstractPersistable<Long> {
 
     //@Column(name = "from_user", nullable = false)

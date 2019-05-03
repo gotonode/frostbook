@@ -98,14 +98,15 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
                             <a class="dropdown-item" href="/id"><i class="fas fa-fw fa-user-circle"></i> My profile</a>
-                            <a class="dropdown-item" href="/gallery"><i class="fas fa-fw fa-user-circle"></i> My image gallery</a>
+                            <a class="dropdown-item" href="/gallery"><i class="fas fa-fw fa-user-circle"></i> My image
+                                gallery</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/logout"><i class="fas fa-fw fa-sign-out-alt"></i> Logout</a>
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="POST">
-                    <input class="form-control mr-sm-2" name="query" type="search"
+                <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="POST" id="search-form">
+                    <input class="form-control mr-sm-2" name="query" type="search" id="search"
                            placeholder="(handle, name or path)" aria-label="Search">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i
                             class="fas fa-fw fa-search"></i>

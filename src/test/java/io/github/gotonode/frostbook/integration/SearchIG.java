@@ -1,5 +1,6 @@
 package io.github.gotonode.frostbook.integration;
 
+import io.github.gotonode.frostbook.ProfileContainer;
 import io.github.gotonode.frostbook._Generic;
 import io.github.gotonode.frostbook.domain.Profile;
 import io.github.gotonode.frostbook.repository.CommentRepository;
@@ -71,28 +72,38 @@ public class SearchIG extends FluentTest {
     @Autowired
     private _Generic _generic;
 
+    /**
+     * Create a new profile, check that the search results won't show it yet, then save that profile
+     * and perform a normal search to see if the search functionality returns that profile.
+     */
     @Test
-    public void existingUserCanLogin() {
+    public void profileShowsUpInSearchResults() {
 
-        String cardHeaderString = "card-header";
-
-        goTo("http://localhost:" + port + "/search");
-
-        assertFalse(pageSource().contains(cardHeaderString));
-
-        for (int i = 0; i < 10; i++) {
-
-            String plaintextPassword = UUID.randomUUID().toString().substring(0, 32);
-
-            Profile profile = _generic.getNewRandomProfile(plaintextPassword);
-
-            profileRepository.save(profile);
-        }
+        Profile profile = _generic.getNewRandomProfile();
 
         goTo("http://localhost:" + port + "/search");
 
-        // TODO: Count the instances here so that they are an exact match!
-        assertTrue(pageSource().contains(cardHeaderString));
+        assertFalse(pageSource().contains(profile.getHandle()));
+
+        profileRepository.save(profile);
+
+        find("#search").fill().with(profile.getHandle());
+
+        find("form#search-form").submit();
+
+        assertTrue(pageSource().contains(profile.getHandle()));
+    }
+
+    @Test
+    public void gibberishProfileWillNotShowUpOnSearchResults() {
+
+        goTo("http://localhost:" + port + "/search");
+
+        find("#search").fill().with("");
+
+        find("form#search-form").submit();
+
+        assertTrue(pageSource().contains(""));
     }
 
 }

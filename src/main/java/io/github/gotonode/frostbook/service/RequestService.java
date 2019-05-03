@@ -7,8 +7,6 @@ import io.github.gotonode.frostbook.repository.ProfileRepository;
 import io.github.gotonode.frostbook.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -67,8 +65,7 @@ public class RequestService {
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Profile currentProfile = profileRepository.findProfileByHandle(userDetails.getUsername());
+        Profile currentProfile = userDetails.getProfile();
 
         currentProfile.getFriends().add(fromProfile);
         fromProfile.getFriends().add(currentProfile);
@@ -96,8 +93,7 @@ public class RequestService {
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Profile currentProfile = profileRepository.findProfileByHandle(userDetails.getUsername());
+        Profile currentProfile = userDetails.getProfile();
 
         currentProfile.getRequests().remove(request);
 
@@ -114,5 +110,7 @@ public class RequestService {
         return profile.getRequests().size();
     }
 
-
+    public List<Request> getSentRequests() {
+        return requestRepository.findAllByFromProfile(userDetails.getProfile());
+    }
 }

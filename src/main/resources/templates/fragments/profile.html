@@ -13,12 +13,17 @@
     <div class="card">
         <div class="card-header text-center">
 
-            <strong th:text="${profile.handle}" class="card-title "></strong>
-            <small sec:authorize="isAuthenticated()"
-                   th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}"
-                   class="text-secondary"> (you)</small>
+            <i title="This profile was created via the debug-tool" class="fas fa-fw fa-bug text-secondary"
+               th:if="${profile.authorities.contains('DEBUG')}"></i>
+                <strong th:text="${profile.handle}" class="card-title "></strong>
+                <small sec:authorize="isAuthenticated()"
+                       th:if="${#strings.equals(#authentication.getPrincipal().getUsername(), profile.handle)}"
+                       class="text-secondary"> (you)
+                </small>
         </div>
-        <img th:if="${profile.profileImage}" class="card-img-top" th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${profile.profileImage.id})}" alt="Card image cap">
+        <img th:if="${profile.profileImage}" class="card-img-top"
+             th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${profile.profileImage.id})}"
+             alt="Card image cap">
         <img th:if="${profile.profileImage} == null" class="card-img-top" src="/img/sample01.png" alt="Card image cap">
 
         <div class="card-body">

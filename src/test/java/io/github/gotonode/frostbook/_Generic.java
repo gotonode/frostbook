@@ -24,6 +24,12 @@ public class _Generic {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Creates a random new profile with the given password.
+     *
+     * @param plaintextPassword The plaintext password to be used. Keep it safe for later use.
+     * @return The new profile.
+     */
     public Profile getNewRandomProfile(String plaintextPassword) {
 
         Profile profile = new Profile();
@@ -37,6 +43,15 @@ public class _Generic {
         profile.setPassword(passwordEncoder.encode(plaintextPassword));
 
         return profile;
+    }
+
+    /**
+     * Creates a random new profile and sets a password for it that cannot be recovered later.
+     *
+     * @return The new profile.
+     */
+    public Profile getNewRandomProfile() {
+        return getNewRandomProfile(UUID.randomUUID().toString());
     }
 
     /**
@@ -83,6 +98,22 @@ public class _Generic {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return profile;
+    }
+
+    /**
+     * Creates a random new profile and saves it to the database.
+     *
+     * @return An object that contains both the profile (with hashed password) and the plaintext password string.
+     */
+    public ProfileContainer createAndSaveRandomNewProfile() {
+
+        String plaintextPassword = UUID.randomUUID().toString().substring(0, 32);
+
+        Profile profile = getNewRandomProfile(plaintextPassword);
+
+        profileRepository.save(profile);
+
+        return new ProfileContainer(profile, plaintextPassword);
     }
 
 }

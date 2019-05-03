@@ -24,9 +24,12 @@
 
     <div th:if="${count >= 1}" class="card-deck">
         <div class="col-sm-6 card-row" th:each="profile : ${profiles}">
-            <div class="card bg-light">
+            <div class="card bg-light m-0">
                 <div th:if="${profile.authorities.contains('ADMIN')}" class="ribbon"><span>ADMIN</span></div>
-                <!--<img src="..." class="card-img-top" alt="...">-->
+<!--                <img th:if="${profile.profileImage}" class="card-img-top"-->
+<!--                     th:src="@{/id/{path}/gallery/{id}/content(path=${profile.path}, id=${profile.profileImage.id})}"-->
+<!--                     alt="Card image cap">-->
+<!--                <img th:if="${profile.profileImage} == null" class="card-img-top" src="/img/sample01.png" alt="Card image cap">-->
                 <strong class="card-header">
                     <i title="This profile was created via the debug-tool" class="fas fa-fw fa-bug text-secondary" th:if="${profile.authorities.contains('DEBUG')}"></i>
                     <span th:text="${profile.handle}">profile.handle</span>
