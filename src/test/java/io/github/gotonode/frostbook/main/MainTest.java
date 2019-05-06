@@ -33,7 +33,6 @@ public class MainTest {
         mockMvc.perform(get("/login")).andExpect(status().isOk());
         mockMvc.perform(get("/help")).andExpect(status().isOk());
         mockMvc.perform(get("/about")).andExpect(status().isOk());
-        mockMvc.perform(get("/search")).andExpect(status().isOk());
     }
 
     @Test
