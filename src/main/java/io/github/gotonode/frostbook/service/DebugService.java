@@ -114,13 +114,21 @@ public class DebugService {
         requestFromUserFour.setDate(Date.from(Instant.now()));
         requestFromUserFour.setFromProfile(profileUserFour);
 
+        Request requestFromAdmin = new Request();
+        requestFromAdmin.setDate(Date.from(Instant.now()));
+        requestFromAdmin.setFromProfile(profileAdmin);
+
         requestRepository.save(requestFromUserThree);
         requestRepository.save(requestFromUserFour);
+        requestRepository.save(requestFromAdmin);
 
         profileAdmin.getRequests().add(requestFromUserThree);
         profileAdmin.getRequests().add(requestFromUserFour);
 
+        profileUserThree.getRequests().add(requestFromAdmin);
+
         profileRepository.save(profileAdmin);
+        profileRepository.save(profileUserThree);
 
         Comment commentFromUserOne = new Comment();
         commentFromUserOne.setFromProfile(profileUserOne);
@@ -129,7 +137,7 @@ public class DebugService {
 
         Comment commentFromUserTwo = new Comment();
         commentFromUserTwo.setFromProfile(profileUserFour);
-        commentFromUserTwo.setDate(Date.from(Instant.now()));
+        commentFromUserTwo.setDate(Date.from(Instant.EPOCH));
         commentFromUserTwo.setComment("Frostbook rules!");
 
         commentRepository.save(commentFromUserOne);

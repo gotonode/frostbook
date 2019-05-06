@@ -12,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Data
+@NamedEntityGraph(name = "Profile.findAll", attributeNodes = {@NamedAttributeNode("images"), @NamedAttributeNode("comments"),
+        @NamedAttributeNode("authorities")})
 public class Profile extends AbstractPersistable<Long> {
 
     @Column(name = "handle", nullable = false, unique = true)
@@ -47,7 +49,7 @@ public class Profile extends AbstractPersistable<Long> {
     @ManyToMany
     private List<Comment> comments = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
     private List<String> authorities = new ArrayList<>();
 
     public Profile(String handle, String password, String name, String path) {

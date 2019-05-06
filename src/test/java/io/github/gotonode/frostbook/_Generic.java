@@ -82,7 +82,7 @@ public class _Generic {
      */
     public Profile autoLogin(String handle) {
 
-        Profile profile = profileRepository.findProfileByHandle(handle.trim());
+        Profile profile = profileRepository.findByHandle(handle.trim());
 
         if (profile == null) {
             return null;

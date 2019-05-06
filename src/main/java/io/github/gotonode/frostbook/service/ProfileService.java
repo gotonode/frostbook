@@ -7,7 +7,6 @@ import io.github.gotonode.frostbook.domain.Request;
 import io.github.gotonode.frostbook.form.RegisterData;
 import io.github.gotonode.frostbook.repository.ImageRepository;
 import io.github.gotonode.frostbook.repository.ProfileRepository;
-import io.github.gotonode.frostbook.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -73,7 +72,7 @@ public class ProfileService {
     }
 
     public Profile findByPath(String path) {
-        return profileRepository.findProfileByPath(path);
+        return profileRepository.findByPath(path);
     }
 
     public Profile create(RegisterData registerData) {
@@ -104,7 +103,7 @@ public class ProfileService {
     }
 
     public List<Profile> getFriends(Authentication authentication) {
-        Profile currentProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile currentProfile = profileRepository.findByHandle(authentication.getName());
 
         return currentProfile.getFriends();
     }
@@ -126,16 +125,16 @@ public class ProfileService {
     }
 
     public Profile findByHandle(String handle) {
-        return profileRepository.findProfileByHandle(handle);
+        return profileRepository.findByHandle(handle);
     }
 
     public Profile findByAuthentication(Authentication authentication) {
-        return profileRepository.findProfileByHandle(authentication.getName());
+        return profileRepository.findByHandle(authentication.getName());
     }
 
     public Profile setAsProfileImage(long id, Authentication authentication) {
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         Image image = imageRepository.findById(id).orElse(null);
 
@@ -155,7 +154,7 @@ public class ProfileService {
 
     public boolean isFriendsWith(Profile profile, Authentication authentication) {
 
-        Profile myProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile myProfile = profileRepository.findByHandle(authentication.getName());
 
         if (myProfile.equals(profile)) {
             // You're always friends with yourself. :-)
@@ -167,7 +166,7 @@ public class ProfileService {
 
     public boolean isFriendsWith(String path, Authentication authentication) {
 
-        Profile targetProfile = profileRepository.findProfileByPath(path);
+        Profile targetProfile = profileRepository.findByPath(path);
 
         return isFriendsWith(targetProfile, authentication);
     }

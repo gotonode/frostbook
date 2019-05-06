@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String handle) throws UsernameNotFoundException {
 
-        Profile profile = profileRepository.findProfileByHandle(handle);
+        Profile profile = profileRepository.findByHandle(handle);
 
         if (profile == null) {
             throw new UsernameNotFoundException("No such handle: " + handle);
@@ -50,6 +50,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public Profile getProfile() {
         String handle = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        return profileRepository.findProfileByHandle(handle);
+        return profileRepository.findByHandle(handle);
     }
 }

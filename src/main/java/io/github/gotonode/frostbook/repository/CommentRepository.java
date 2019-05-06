@@ -9,7 +9,7 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Override
-    @Query
-     List<Comment> findAll();
+    @Query(name = "Comment.findAll")
+    List<Comment> findAll();
 
 }

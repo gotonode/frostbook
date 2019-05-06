@@ -30,7 +30,7 @@ public class CommentService {
     @Transactional
     public Comment addComment(CommentData commentData, Authentication authentication, String path) {
 
-        Profile fromProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile fromProfile = profileRepository.findByHandle(authentication.getName());
 
         Comment comment = new Comment();
 
@@ -38,7 +38,7 @@ public class CommentService {
         comment.setDate(Date.from(Instant.now()));
         comment.setFromProfile(fromProfile);
 
-        Profile toProfile = profileRepository.findProfileByPath(path);
+        Profile toProfile = profileRepository.findByPath(path);
 
         commentRepository.save(comment);
 
@@ -58,7 +58,7 @@ public class CommentService {
             return null;
         }
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         if (comment.getLikedBy().contains(profile)) {
             comment.getLikedBy().remove(profile);
@@ -74,8 +74,8 @@ public class CommentService {
     @Transactional
     public Comment remove(long id, String path, Authentication authentication) {
 
-        Profile targetProfile = profileRepository.findProfileByPath(path);
-        Profile myProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile targetProfile = profileRepository.findByPath(path);
+        Profile myProfile = profileRepository.findByHandle(authentication.getName());
 
         Comment comment = commentRepository.findById(id).orElse(null);
 

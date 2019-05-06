@@ -103,7 +103,8 @@ public class SearchIG extends FluentTest {
 
         find("form#search-form").submit();
 
-        assertTrue(pageSource().contains(""));
+        // Is it wise to use HTML codes in these?
+        assertTrue(pageSource().contains("<span class=\"badge badge-primary\">0</span>"));
     }
 
 }

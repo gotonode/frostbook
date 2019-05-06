@@ -44,13 +44,17 @@ public class SearchController {
     @PostMapping("/search")
     public String searchPost(@RequestParam String query) {
 
-        System.out.println("Search query: " + query);
-
         query = query.trim();
 
         if (query.isEmpty()) {
+
+            System.out.println("Search (with empty query)");
+
             return "redirect:/search";
         } else {
+
+            System.out.println("Search query: " + query);
+
             return "redirect:/search?query=" + query;
         }
     }

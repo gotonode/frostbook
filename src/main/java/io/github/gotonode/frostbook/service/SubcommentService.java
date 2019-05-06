@@ -76,7 +76,7 @@ public class SubcommentService {
     @Transactional
     public Subcomment remove(long commentId, long subcommentId, String path, Authentication authentication) {
 
-        Profile myProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile myProfile = profileRepository.findByHandle(authentication.getName());
 
         Comment comment = commentRepository.findById(commentId).orElse(null);
         Subcomment subcomment = subcommentRepository.findById(subcommentId).orElse(null);
@@ -107,7 +107,7 @@ public class SubcommentService {
 
     private Subcomment createSubcommentFromSubcommentData(SubcommentData subcommentData, String handle) {
 
-        Profile profile = profileRepository.findProfileByHandle(handle);
+        Profile profile = profileRepository.findByHandle(handle);
 
         Subcomment subcomment = new Subcomment();
 
@@ -120,7 +120,7 @@ public class SubcommentService {
 
     public Subcomment removeFromImage(long imageId, long subcommentId, String path, Authentication authentication) {
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         Image image = imageRepository.findById(imageId).orElse(null);
 

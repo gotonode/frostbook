@@ -33,7 +33,7 @@ public class RequestService {
     @Transactional
     public void befriend(Profile targetProfile, Authentication authentication) {
 
-        Profile currentProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile currentProfile = profileRepository.findByHandle(authentication.getName());
 
         Request request = new Request();
         request.setDate(Date.from(Instant.now()));
@@ -49,7 +49,7 @@ public class RequestService {
     @Transactional
     public void unfriend(Profile targetProfile, Authentication authentication) {
 
-        Profile currentProfile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile currentProfile = profileRepository.findByHandle(authentication.getName());
 
         targetProfile.getFriends().remove(currentProfile);
         currentProfile.getFriends().remove(targetProfile);
@@ -61,7 +61,7 @@ public class RequestService {
     @Transactional
     public void accept(String path) {
 
-        Profile fromProfile = profileRepository.findProfileByPath(path);
+        Profile fromProfile = profileRepository.findByPath(path);
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
@@ -89,7 +89,7 @@ public class RequestService {
 
     public void remove(String path) {
 
-        Profile fromProfile = profileRepository.findProfileByPath(path);
+        Profile fromProfile = profileRepository.findByPath(path);
 
         Request request = requestRepository.findByFromProfile(fromProfile);
 
@@ -104,7 +104,7 @@ public class RequestService {
 
     public long getRequestCount(Authentication authentication) {
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         // TODO: Optimize this later.
         return profile.getRequests().size();

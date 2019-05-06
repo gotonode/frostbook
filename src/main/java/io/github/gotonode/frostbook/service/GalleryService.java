@@ -14,7 +14,6 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class GalleryService {
@@ -40,7 +39,7 @@ public class GalleryService {
     @Transactional
     public Image create(MultipartFile file, String description, Authentication authentication) throws IOException {
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         if (profile.getImages().size() >= MyApplication.MAX_GALLERY_IMAGES_PER_USER) {
             return null;
@@ -77,7 +76,7 @@ public class GalleryService {
             return null;
         }
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         if (image.getLikedBy().contains(profile)) {
             image.getLikedBy().remove(profile);
@@ -99,7 +98,7 @@ public class GalleryService {
             return null;
         }
 
-        Profile profile = profileRepository.findProfileByHandle(authentication.getName());
+        Profile profile = profileRepository.findByHandle(authentication.getName());
 
         // We own this image. Now we can delete it.
         if (profile.getImages().contains(image)) {
