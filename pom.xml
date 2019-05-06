@@ -11,8 +11,6 @@
     <version>1.0-DEV</version>
     <packaging>jar</packaging>
 
-    <!-- TODO: Uncomment the three nodes at the bottom for final release! -->
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -55,7 +53,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- SPRING BOOT -->
+        <!-- /SPRING BOOT -->
 
         <!-- HELPER -->
         <dependency>
@@ -70,7 +68,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!-- DATA -->
+        <!-- /DATA -->
 
         <!-- DATABASE -->
         <dependency>
@@ -82,7 +80,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-        <!-- DATABASE -->
+        <!-- /DATABASE -->
 
         <!-- TESTING -->
         <dependency>
@@ -119,16 +117,12 @@
         </dependency>
         <!-- /JSON -->
         
-        <!-- TODO: Uncomment the following for final release! -->
-
-        <!--
         <dependency>
             <groupId>fi.helsinki.cs.tmc</groupId>
             <artifactId>edu-test-utils</artifactId>
             <version>0.4.2</version>
             <scope>test</scope>
         </dependency>
-        -->
 
     </dependencies>
 
@@ -141,9 +135,6 @@
         </plugins>
     </build>
 
-    <!-- TODO: Uncomment the following for final release! -->
-
-    <!--
     <repositories>
         <repository>
             <id>tmc</id>
@@ -157,9 +148,7 @@
             </snapshots>
         </repository>
     </repositories>
-    -->
 
-    <!--
     <pluginRepositories>
         <pluginRepository>
             <id>tmc</id>
@@ -173,6 +162,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    -->
 
 </project>
