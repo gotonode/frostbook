@@ -49,7 +49,7 @@ public class Profile extends AbstractPersistable<Long> {
     @ManyToMany
     private List<Comment> comments = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities = new ArrayList<>();
 
     public Profile(String handle, String password, String name, String path) {
