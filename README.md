@@ -1,5 +1,5 @@
 # Frostbook
-*A social media app*
+*A social media app* (development paused)
 
 [![Build Status](https://travis-ci.org/gotonode/frostbook.svg?branch=master)](https://travis-ci.org/gotonode/frostbook)
 
